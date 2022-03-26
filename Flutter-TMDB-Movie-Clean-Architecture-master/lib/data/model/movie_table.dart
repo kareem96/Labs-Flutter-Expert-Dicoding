@@ -1,6 +1,7 @@
 
 
 
+import 'package:app_clean_architecture_flutter/data/model/movie_model.dart';
 import 'package:app_clean_architecture_flutter/domain/entities/movie.dart';
 import 'package:app_clean_architecture_flutter/domain/entities/movie_detail.dart';
 import 'package:equatable/equatable.dart';
@@ -25,6 +26,13 @@ class MovieTable extends Equatable{
       title: map['title'],
       posterPath: map['posterPath'],
       overview: map['overview'],
+  );
+
+  factory MovieTable.fromDTO(MovieModel movie) => MovieTable(
+      id: movie.id,
+      title: movie.title,
+      posterPath: movie.posterPath,
+      overview: movie.overview
   );
 
   Map<String, dynamic> toJson() => {

@@ -22,5 +22,8 @@ class ConnectionFailure extends Failure{
 
 class DataBaseFailure extends Failure{
   DataBaseFailure(String message) : super(message);
+}
 
+class CacheFailure extends Failure{
+  CacheFailure(String message): super(message);
 }

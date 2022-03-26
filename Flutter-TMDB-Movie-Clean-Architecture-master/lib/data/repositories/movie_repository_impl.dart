@@ -6,6 +6,7 @@ import 'dart:io';
 
 import 'package:app_clean_architecture_flutter/common/exception.dart';
 import 'package:app_clean_architecture_flutter/common/failure.dart';
+import 'package:app_clean_architecture_flutter/common/network_info.dart';
 import 'package:app_clean_architecture_flutter/data/datasources/local_data_source.dart';
 import 'package:app_clean_architecture_flutter/data/datasources/remote_data_source.dart';
 import 'package:app_clean_architecture_flutter/data/model/movie_table.dart';
@@ -17,20 +18,39 @@ import 'package:dartz/dartz.dart';
 class MovieRepositoryImpl implements MovieRepository{
   final MovieRemoteDataSource remoteDataSource;
   final MovieLocalDataSource localDataSource;
+  final NetworkInfo networkInfo;
 
-  MovieRepositoryImpl({required this.remoteDataSource, required this.localDataSource});
+  MovieRepositoryImpl({
+    required this.remoteDataSource,
+    required this.localDataSource,
+    required this.networkInfo,
+  });
+
+
 
   @override
   Future<Either<Failure, List<Movie>>> getNowPlaying() async {
     // TODO: implement getNowPlaying
-    try{
-      final result = await remoteDataSource.getNowPlaying();
-      return Right(result.map((model) => model.toEntity()).toList());
-    }on ServerException{
-      return Left(ServerFailure(''));
-    }on SocketException{
-      return Left(ConnectionFailure('Failed to connect network!'));
+    // networkInfo.isConnected;
+    if(await networkInfo.isConnected){
+      try{
+        final result = await remoteDataSource.getNowPlaying();
+        localDataSource.cacheNowPlayingMovies(result.map((movie) => MovieTable.fromDTO(movie)).toList());
+        return Right(result.map((model) => model.toEntity()).toList());
+      }on ServerException{
+        return Left(ServerFailure(''));
+      }on SocketException{
+        return Left(ConnectionFailure('Failed to connect network!'));
+      }
+    }else{
+      try{
+        final result = await localDataSource.getCacheNowPlaying();
+        return Right(result.map((model) => model.toEntity()).toList());
+      }on CacheException catch (e){
+        return Left(CacheFailure(e.message));
+      }
     }
+
   }
 
   @override

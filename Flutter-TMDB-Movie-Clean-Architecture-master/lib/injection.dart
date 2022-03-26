@@ -20,6 +20,7 @@ import 'package:app_clean_architecture_flutter/presentation/provider/movie_list_
 import 'package:app_clean_architecture_flutter/presentation/provider/movie_search_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/popular_movies_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/watchlist_movie_notifier.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
@@ -67,7 +68,8 @@ void init(){
   locator.registerLazySingleton<MovieRepository>(() =>
       MovieRepositoryImpl(
         remoteDataSource: locator(),
-        localDataSource: locator()
+        localDataSource: locator(),
+        networkInfo: locator()
       )
   );
 
@@ -83,4 +85,6 @@ void init(){
 
   ///external
   locator.registerLazySingleton(() => http.Client());
+  locator.registerLazySingleton(() => DataConnectionChecker());
+
 }
