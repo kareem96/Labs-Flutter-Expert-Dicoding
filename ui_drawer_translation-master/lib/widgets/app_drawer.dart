@@ -57,6 +57,7 @@ class _MiddleContent extends StatelessWidget {
           text: 'Favorites',
         ),
         _IconText(
+
           iconData: Icons.email_rounded,
           text: 'Messages',
         ),
