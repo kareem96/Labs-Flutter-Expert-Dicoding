@@ -149,7 +149,7 @@ void main() {
 
   group('cache now playing movies', (){
     test('should call database helper to save data', () async{
-      
+
     });
   });
 
