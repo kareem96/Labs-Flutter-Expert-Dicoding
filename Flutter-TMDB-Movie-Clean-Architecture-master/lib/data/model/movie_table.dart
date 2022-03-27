@@ -12,7 +12,7 @@ class MovieTable extends Equatable{
   final String? posterPath;
   final String? overview;
 
-  MovieTable({required this.id, required this.title, required this.posterPath, required this.overview});
+  const MovieTable({required this.id, required this.title, required this.posterPath, required this.overview});
 
   factory MovieTable.fromEntity(MovieDetail movie) => MovieTable(
       id: movie.id,

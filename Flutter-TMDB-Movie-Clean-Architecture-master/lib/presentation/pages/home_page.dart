@@ -11,7 +11,6 @@ import 'package:app_clean_architecture_flutter/presentation/pages/search_page.da
 import 'package:app_clean_architecture_flutter/presentation/pages/top_rated_movies_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/watchlist_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/movie_list_notifier.dart';
-import 'package:app_clean_architecture_flutter/presentation/widgets/card_list.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +42,6 @@ class _HomePageState extends State<HomePage> {
           children:  [
             const UserAccountsDrawerHeader(
               currentAccountPicture: CircleAvatar(
-                // backgroundColor: Colors.indigo,
                 backgroundImage: AssetImage('assets/ui.png'),
               ),
                 accountName: Text('Nonton Kuy'),
@@ -55,7 +53,7 @@ class _HomePageState extends State<HomePage> {
               onTap: () => {Navigator.pop(context)},
             ),
             ListTile(
-              leading: Icon(Icons.save_alt_outlined),
+              leading: const Icon(Icons.save_alt_outlined),
               title: const Text('Watchlist'),
               onTap: (){
                 Navigator.pushNamed(context, WatchlistPage.routeName);
@@ -90,13 +88,13 @@ class _HomePageState extends State<HomePage> {
               Consumer<MovieListNotifier>(builder: (context, data, child) {
                 final state = data.nowPlayingState;
                 if (state == RequestState.Loading) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else if (state == RequestState.Loaded) {
                   return MovieList(data.nowPlayingMovies);
                 } else {
-                  return Text('Failed');
+                  return const Text('Failed');
                 }
               }),
               _buildSubHeading(
@@ -113,7 +111,6 @@ class _HomePageState extends State<HomePage> {
                   }else if(state == RequestState.Loaded){
                     return MovieList(data.popularMovies);
                   }else{
-                    // print(data.popularMovies);
                     return Text(data.message);
                   }
                 },
@@ -129,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                   }else if(state == RequestState.Loaded){
                     return MovieList(data.topRatedMovies);
                   }else{
-                    return Text('Failed');
+                    return const Text('Failed');
                   }
                 },
               )
@@ -172,7 +169,7 @@ class MovieList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,

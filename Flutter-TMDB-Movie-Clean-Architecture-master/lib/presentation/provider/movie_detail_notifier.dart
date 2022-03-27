@@ -6,7 +6,6 @@ import 'package:app_clean_architecture_flutter/domain/entities/movie.dart';
 import 'package:app_clean_architecture_flutter/domain/entities/movie_detail.dart';
 import 'package:app_clean_architecture_flutter/domain/usecase/get_detail_movie.dart';
 import 'package:app_clean_architecture_flutter/domain/usecase/get_recommended_movie.dart';
-import 'package:app_clean_architecture_flutter/domain/usecase/get_watchlist_movies.dart';
 import 'package:app_clean_architecture_flutter/domain/usecase/get_watchlist_status.dart';
 import 'package:app_clean_architecture_flutter/domain/usecase/remove_watchlist.dart';
 import 'package:app_clean_architecture_flutter/domain/usecase/save_watchlist.dart';

@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:app_clean_architecture_flutter/common/exception.dart';
@@ -175,14 +174,6 @@ void main() {
       expect(result, Left(ServerFailure('')));
     });
 
-    /*test('should return connection failure when device is not connected to the internet', () async {
-      // arrange
-      when(mockRemoteDataSource.getPopularMovies()).thenThrow(SocketException('Failed to connect to the network'));
-      // act
-      final result = await repository.getPopularMovies();
-      // assert
-      expect(result, Left(ConnectionFailure('Failed to connect to the network')));
-    });*/
   });
 
   group('Top Rated Movies', () {
@@ -192,7 +183,6 @@ void main() {
       ///act
       final result = await repository.getTopRatedMovies();
       ///assert
-      /* workaround to test List in Right. Issue: https://github.com/spebbe/dartz/issues/80 */
       final resultList = result.getOrElse(() => []);
       expect(resultList, tMovieList);
     });
@@ -245,16 +235,6 @@ void main() {
           expect(result, Left(ServerFailure('')));
         });
 
-    /*test('should return ConnectionFailure when device is not connected to the internet', () async {
-          // arrange
-          when(mockRemoteDataSource.searchMovies(tQuery))
-              .thenThrow(SocketException('Failed to connect to the network'));
-          // act
-          final result = await repository.searchMovies(tQuery);
-          // assert
-          expect(
-              result, Left(ConnectionFailure('Failed to connect to the network')));
-        });*/
   });
 
   group('Save watchlist', () {
@@ -291,12 +271,11 @@ void main() {
     });
 
     test('should return DatabaseFailure when remove unsuccessful', () async {
-      // arrange
-      when(mockLocalDataSource.removeWatchlist(testMovieTable))
-          .thenThrow(DataBaseException('Failed to remove watchlist'));
-      // act
+      ///arrange
+      when(mockLocalDataSource.removeWatchlist(testMovieTable)).thenThrow(DataBaseException('Failed to remove watchlist'));
+      ///act
       final result = await repository.removeWatchlist(testMovieDetail);
-      // assert
+      ///assert
       expect(result, Left(DataBaseFailure('Failed to remove watchlist')));
     });
   });

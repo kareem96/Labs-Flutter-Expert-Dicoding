@@ -8,7 +8,6 @@ import 'package:app_clean_architecture_flutter/domain/entities/movie.dart';
 import 'package:app_clean_architecture_flutter/domain/entities/movie_detail.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/movie_detail_notifier.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
@@ -71,7 +70,6 @@ class ContentDetails extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     return Stack(
       children: [
-        // Image.asset('assets/image.png'),
         CachedNetworkImage(
           imageUrl: 'https://image.tmdb.org/t/p/w500${movie.posterPath}',
           width: screenWidth,
@@ -165,7 +163,6 @@ class ContentDetails extends StatelessWidget {
                                           padding: const EdgeInsets.all(4.0),
                                           child: InkWell(
                                             onTap: (){
-                                              // Navigator.pushNamed(context, MovieDetailPage.routeName);
                                               Navigator.pushReplacementNamed(
                                                 context,
                                                 MovieDetailPage.routeName,

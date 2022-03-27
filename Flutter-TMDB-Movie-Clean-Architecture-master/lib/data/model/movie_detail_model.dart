@@ -1,8 +1,3 @@
-// To parse this JSON data, do
-//
-//     final welcome = welcomeFromJson(jsonString);
-
-import 'dart:convert';
 
 import 'package:app_clean_architecture_flutter/data/model/genre_model.dart';
 import 'package:app_clean_architecture_flutter/domain/entities/movie_detail.dart';

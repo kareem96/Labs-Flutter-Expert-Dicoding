@@ -23,7 +23,7 @@ void main(){
     when(mockMovieRepository.getWatchlistMovies()).thenAnswer((_) async => Right(testMovieList));
     ///act
     final result = await getWatchlistMovies.execute();
-    // /assert
+    ///assert
     expect(result, Right(testMovieList));
   });
 }

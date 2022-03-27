@@ -28,7 +28,7 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Top Rated Movies'),),
+      appBar: AppBar(title: const Text('Top Rated Movies'),),
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: Consumer<TopRatedMoviesNotifier>(
@@ -45,7 +45,7 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
               );
             }else{
               return Center(
-                key: Key('error_message'),
+                key: const Key('error_message'),
                 child: Text(provider.message),
               );
             }

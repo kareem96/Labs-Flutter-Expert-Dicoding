@@ -10,7 +10,7 @@ class GenreModel extends Equatable{
 
   final int id;
   final String name;
-  GenreModel({required this.id, required this.name});
+  const GenreModel({required this.id, required this.name});
 
   factory GenreModel.fromJson(Map<String, dynamic> json) => GenreModel(
       id: json['id'],

@@ -1,9 +1,4 @@
-// To parse this JSON data, do
-//
-//     final welcome = welcomeFromJson(jsonString);
 
-
-import 'package:app_clean_architecture_flutter/data/model/genre_model.dart';
 import 'package:app_clean_architecture_flutter/domain/entities/genre.dart';
 import 'package:equatable/equatable.dart';
 

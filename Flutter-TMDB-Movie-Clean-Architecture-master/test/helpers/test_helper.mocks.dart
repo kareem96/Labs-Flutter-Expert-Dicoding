@@ -222,25 +222,6 @@ class MockDatabaseHelper extends _i1.Mock implements _i14.DatabaseHelper {
               returnValue: Future<_i15.Database?>.value())
           as _i6.Future<_i15.Database?>);
   @override
-  _i6.Future<int?> insertWatchlist(_i13.MovieTable? movie) =>
-      (super.noSuchMethod(Invocation.method(#insertWatchlist, [movie]),
-          returnValue: Future<int?>.value()) as _i6.Future<int?>);
-  @override
-  _i6.Future<int?> removeWatchlist(_i13.MovieTable? movie) =>
-      (super.noSuchMethod(Invocation.method(#removeWatchlist, [movie]),
-          returnValue: Future<int?>.value()) as _i6.Future<int?>);
-  @override
-  _i6.Future<Map<String, dynamic>?> getMovieById(int? id) =>
-      (super.noSuchMethod(Invocation.method(#getMovieById, [id]),
-              returnValue: Future<Map<String, dynamic>?>.value())
-          as _i6.Future<Map<String, dynamic>?>);
-  @override
-  _i6.Future<List<Map<String, dynamic>>> getWatchlistMovies() =>
-      (super.noSuchMethod(Invocation.method(#getWatchlistMovies, []),
-              returnValue: Future<List<Map<String, dynamic>>>.value(
-                  <Map<String, dynamic>>[]))
-          as _i6.Future<List<Map<String, dynamic>>>);
-  @override
   _i6.Future<void> insertCacheTransaction(
           List<_i13.MovieTable>? movies, String? category) =>
       (super.noSuchMethod(
@@ -257,6 +238,25 @@ class MockDatabaseHelper extends _i1.Mock implements _i14.DatabaseHelper {
   _i6.Future<int> clearCache(String? category) =>
       (super.noSuchMethod(Invocation.method(#clearCache, [category]),
           returnValue: Future<int>.value(0)) as _i6.Future<int>);
+  @override
+  _i6.Future<int> insertWatchlist(_i13.MovieTable? movie) =>
+      (super.noSuchMethod(Invocation.method(#insertWatchlist, [movie]),
+          returnValue: Future<int>.value(0)) as _i6.Future<int>);
+  @override
+  _i6.Future<int> removeWatchlist(_i13.MovieTable? movie) =>
+      (super.noSuchMethod(Invocation.method(#removeWatchlist, [movie]),
+          returnValue: Future<int>.value(0)) as _i6.Future<int>);
+  @override
+  _i6.Future<Map<String, dynamic>?> getMovieById(int? id) =>
+      (super.noSuchMethod(Invocation.method(#getMovieById, [id]),
+              returnValue: Future<Map<String, dynamic>?>.value())
+          as _i6.Future<Map<String, dynamic>?>);
+  @override
+  _i6.Future<List<Map<String, dynamic>>> getWatchlistMovies() =>
+      (super.noSuchMethod(Invocation.method(#getWatchlistMovies, []),
+              returnValue: Future<List<Map<String, dynamic>>>.value(
+                  <Map<String, dynamic>>[]))
+          as _i6.Future<List<Map<String, dynamic>>>);
 }
 
 /// A class which mocks [NetworkInfo].

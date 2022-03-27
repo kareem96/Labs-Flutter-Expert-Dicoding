@@ -3,7 +3,6 @@
 
 
 import 'dart:io';
-
 import 'package:app_clean_architecture_flutter/common/exception.dart';
 import 'package:app_clean_architecture_flutter/common/failure.dart';
 import 'package:app_clean_architecture_flutter/common/network_info.dart';
