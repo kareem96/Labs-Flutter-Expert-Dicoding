@@ -1,6 +1,7 @@
 
 
 
+import 'package:app_clean_architecture_flutter/common/network_info.dart';
 import 'package:app_clean_architecture_flutter/data/datasources/db/database_helper.dart';
 import 'package:app_clean_architecture_flutter/data/datasources/local_data_source.dart';
 import 'package:app_clean_architecture_flutter/data/datasources/remote_data_source.dart';
@@ -10,6 +11,7 @@ import 'package:app_clean_architecture_flutter/domain/usecase/get_detail_movie.d
 import 'package:app_clean_architecture_flutter/domain/usecase/get_now_playing_movies.dart';
 import 'package:app_clean_architecture_flutter/domain/usecase/get_popular_movies.dart';
 import 'package:app_clean_architecture_flutter/domain/usecase/get_recommended_movie.dart';
+import 'package:app_clean_architecture_flutter/domain/usecase/get_top_rated_movies.dart';
 import 'package:app_clean_architecture_flutter/domain/usecase/get_watchlist_movies.dart';
 import 'package:app_clean_architecture_flutter/domain/usecase/get_watchlist_status.dart';
 import 'package:app_clean_architecture_flutter/domain/usecase/remove_watchlist.dart';
@@ -19,6 +21,7 @@ import 'package:app_clean_architecture_flutter/presentation/provider/movie_detai
 import 'package:app_clean_architecture_flutter/presentation/provider/movie_list_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/movie_search_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/popular_movies_notifier.dart';
+import 'package:app_clean_architecture_flutter/presentation/provider/top_rated_movies_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
@@ -31,6 +34,8 @@ void init(){
   locator.registerFactory(() => MovieListNotifier(
     getNowPlayingMovies: locator(),
     getPopularMovies: locator(),
+    getTopRatedMovies: locator(),
+
   ));
 
   locator.registerFactory(() => MovieDetailNotifier(
@@ -47,11 +52,14 @@ void init(){
 
   locator.registerFactory(() => WatchlistMovieNotifier(getWatchlistMovies: locator()));
 
+  locator.registerFactory(() => TopRatedMoviesNotifier(getTopRatedMovies: locator()));
+
 
 
   ///use case
   locator.registerLazySingleton(() => GetNowPlayingMovies(locator()));
   locator.registerLazySingleton(() => GetPopularMovies(locator()));
+  locator.registerLazySingleton(() => GetTopRatedMovies(locator()));
   locator.registerLazySingleton(() => GetMovieDetail(locator()));
   locator.registerLazySingleton(() => GetMovieRecommendations(locator()));
   locator.registerLazySingleton(() => SearchMovies(locator()));
@@ -82,6 +90,9 @@ void init(){
 
   ///helper
   locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
+
+  ///network
+  locator.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(locator()));
 
   ///external
   locator.registerLazySingleton(() => http.Client());

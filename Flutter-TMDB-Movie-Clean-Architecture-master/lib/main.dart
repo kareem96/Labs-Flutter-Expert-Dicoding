@@ -5,11 +5,13 @@ import 'package:app_clean_architecture_flutter/presentation/pages/home_page.dart
 import 'package:app_clean_architecture_flutter/presentation/pages/movie_detail_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/popular_movies_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/search_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/top_rated_movies_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/watchlist_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/movie_detail_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/movie_list_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/movie_search_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/popular_movies_notifier.dart';
+import 'package:app_clean_architecture_flutter/presentation/provider/top_rated_movies_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +44,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => di.locator<WatchlistMovieNotifier>(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TopRatedMoviesNotifier>(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -64,6 +69,8 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => MovieDetailPage(id: id), settings: settings);
             case PopularMoviesPage.routeName:
               return CupertinoPageRoute(builder: (_) => PopularMoviesPage());
+            case TopRatedMoviesPage.routeName:
+              return MaterialPageRoute(builder: (_) => TopRatedMoviesPage());
             case AboutPage.routeName:
               return MaterialPageRoute(builder: (_) => AboutPage());
             case SearchPage.routeName:

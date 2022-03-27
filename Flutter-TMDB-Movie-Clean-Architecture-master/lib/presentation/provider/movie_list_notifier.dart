@@ -5,6 +5,7 @@ import 'package:app_clean_architecture_flutter/common/state_enum.dart';
 import 'package:app_clean_architecture_flutter/domain/entities/movie.dart';
 import 'package:app_clean_architecture_flutter/domain/usecase/get_now_playing_movies.dart';
 import 'package:app_clean_architecture_flutter/domain/usecase/get_popular_movies.dart';
+import 'package:app_clean_architecture_flutter/domain/usecase/get_top_rated_movies.dart';
 import 'package:flutter/cupertino.dart';
 
 class MovieListNotifier extends ChangeNotifier {
@@ -36,10 +37,12 @@ class MovieListNotifier extends ChangeNotifier {
   MovieListNotifier({
     required this.getNowPlayingMovies,
     required this.getPopularMovies,
+    required this.getTopRatedMovies,
   });
 
   final GetNowPlayingMovies getNowPlayingMovies;
   final GetPopularMovies getPopularMovies;
+  final GetTopRatedMovies getTopRatedMovies;
 
   Future<void> fetchNowPlayingMovies() async {
     _nowPlayingState = RequestState.Loading;
@@ -76,6 +79,22 @@ class MovieListNotifier extends ChangeNotifier {
               _popularMovies = data;
               notifyListeners();
             });
+  }
+
+  Future<void> fetchTopRatedMovies() async{
+    _topRatedMoviesState = RequestState.Loading;
+    notifyListeners();
+
+    final result = await getTopRatedMovies.execute();
+    result.fold((failure) {
+      _topRatedMoviesState = RequestState.Error;
+      _message = failure.message;
+      notifyListeners();
+    }, (data) {
+      _topRatedMoviesState = RequestState.Loaded;
+      _topRatedMovies = data;
+      notifyListeners();
+    });
   }
 
 }

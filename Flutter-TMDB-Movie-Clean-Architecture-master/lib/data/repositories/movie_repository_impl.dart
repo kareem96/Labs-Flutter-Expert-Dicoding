@@ -90,6 +90,8 @@ class MovieRepositoryImpl implements MovieRepository{
     }
   }
 
+
+
   @override
   Future<Either<Failure, List<Movie>>> searchMovies(String query) async{
     try{
@@ -133,6 +135,18 @@ class MovieRepositoryImpl implements MovieRepository{
       return Left(DataBaseFailure(e.message));
     }catch(e){
       throw e;
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Movie>>> getTopRatedMovies() async {
+    try {
+      final result = await remoteDataSource.getTopRatedMovies();
+      return Right(result.map((model) => model.toEntity()).toList());
+    } on ServerException {
+      return Left(ServerFailure(''));
+    } on SocketException {
+      return Left(ConnectionFailure('Failed to connect to the network'));
     }
   }
 

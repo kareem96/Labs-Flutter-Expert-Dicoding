@@ -8,8 +8,10 @@ import 'package:app_clean_architecture_flutter/presentation/pages/about_page.dar
 import 'package:app_clean_architecture_flutter/presentation/pages/movie_detail_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/popular_movies_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/search_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/top_rated_movies_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/watchlist_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/movie_list_notifier.dart';
+import 'package:app_clean_architecture_flutter/presentation/widgets/card_list.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +31,7 @@ class _HomePageState extends State<HomePage> {
     Future.microtask(() => Provider.of<MovieListNotifier>(context, listen: false)
         ..fetchNowPlayingMovies()
         ..fetchPopularMovies()
+        ..fetchTopRatedMovies()
     );
   }
 
@@ -84,14 +87,16 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Now Playing', style: Heading6,),
-              Consumer<MovieListNotifier>(builder: (context, data, child){
+              Consumer<MovieListNotifier>(builder: (context, data, child) {
                 final state = data.nowPlayingState;
-                if(state == RequestState.Loading){
-                  return const Center(child: CircularProgressIndicator(),);
-                }else if(state == RequestState.Loaded){
+                if (state == RequestState.Loading) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state == RequestState.Loaded) {
                   return MovieList(data.nowPlayingMovies);
-                }else{
-                  return const Text('Failed');
+                } else {
+                  return Text('Failed');
                 }
               }),
               _buildSubHeading(
@@ -110,6 +115,21 @@ class _HomePageState extends State<HomePage> {
                   }else{
                     // print(data.popularMovies);
                     return Text(data.message);
+                  }
+                },
+              ),
+              _buildSubHeading(title: 'Top Rated', onTap: (){
+                Navigator.pushNamed(context, TopRatedMoviesPage.routeName);
+              }),
+              Consumer<MovieListNotifier>(
+                builder: (context, data, child){
+                  final state = data.topRatedMoviesState;
+                  if(state == RequestState.Loading){
+                    return const Center(child: CircularProgressIndicator(),);
+                  }else if(state == RequestState.Loaded){
+                    return MovieList(data.topRatedMovies);
+                  }else{
+                    return Text('Failed');
                   }
                 },
               )
