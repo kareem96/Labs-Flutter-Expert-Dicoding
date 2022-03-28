@@ -89,8 +89,6 @@ class MovieRepositoryImpl implements MovieRepository{
     }
   }
 
-
-
   @override
   Future<Either<Failure, List<Movie>>> searchMovies(String query) async{
     try{

@@ -7,7 +7,6 @@ import 'package:equatable/equatable.dart';
 
 class GenreModel extends Equatable{
 
-
   final int id;
   final String name;
   const GenreModel({required this.id, required this.name});

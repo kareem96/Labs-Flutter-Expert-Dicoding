@@ -6,18 +6,20 @@ import 'package:app_clean_architecture_flutter/presentation/pages/movie_detail_p
 import 'package:app_clean_architecture_flutter/presentation/pages/popular_movies_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/search_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/top_rated_movies_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/tv/tv_detail_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/tv/tv_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/watchlist_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/movie_detail_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/movie_list_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/movie_search_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/popular_movies_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/top_rated_movies_notifier.dart';
+import 'package:app_clean_architecture_flutter/presentation/provider/tv/tv_list_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/watchlist_movie_notifier.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'injection.dart' as di;
-
+import 'presentation/provider/tv/tv_detail_notifier.dart';
 
 void main() {
   di.init();
@@ -33,42 +35,52 @@ class MyApp extends StatelessWidget {
           create: (_) => di.locator<MovieListNotifier>(),
         ),
         ChangeNotifierProvider(
-            create: (_) => di.locator<PopularMoviesNotifier>(),
+          create: (_) => di.locator<PopularMoviesNotifier>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<MovieDetailNotifier>(),
         ),
         ChangeNotifierProvider(
-            create: (_) => di.locator<MovieSearchNotifier>(),
+          create: (_) => di.locator<TvDetailNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<MovieSearchNotifier>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<WatchlistMovieNotifier>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TopRatedMoviesNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TvListNotifier>(),
         )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData.dark().copyWith(
-          colorScheme: kColorScheme,
-          primaryColor: kRichBlack,
-          accentColor: kYellow,
-          scaffoldBackgroundColor: kRichBlack,
-          textTheme: textTheme
-        ),
+            colorScheme: kColorScheme,
+            primaryColor: kRichBlack,
+            accentColor: kYellow,
+            scaffoldBackgroundColor: kRichBlack,
+            textTheme: textTheme),
         home: HomePage(),
         navigatorObservers: [routeObserver],
-        onGenerateRoute: (RouteSettings settings){
-          switch (settings.name){
-            case '/home':
+        onGenerateRoute: (RouteSettings settings) {
+          switch (settings.name) {
+            case HomePage.routeName:
               return MaterialPageRoute(builder: (_) => const HomePage());
             case MovieDetailPage.routeName:
               final id = settings.arguments as int;
-              return MaterialPageRoute(builder: (_) => MovieDetailPage(id: id), settings: settings);
+              return MaterialPageRoute(
+                  builder: (_) => MovieDetailPage(id: id), settings: settings);
+            case TvDetailPage.routeName:
+              final id = settings.arguments as int;
+              return MaterialPageRoute(
+                  builder: (_) => TvDetailPage(id: id), settings: settings);
             case PopularMoviesPage.routeName:
-              return CupertinoPageRoute(builder: (_) => PopularMoviesPage());
+              return MaterialPageRoute(builder: (_) => PopularMoviesPage());
             case TopRatedMoviesPage.routeName:
               return MaterialPageRoute(builder: (_) => TopRatedMoviesPage());
             case AboutPage.routeName:
@@ -77,8 +89,10 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => SearchPage());
             case WatchlistPage.routeName:
               return MaterialPageRoute(builder: (_) => WatchlistPage());
+            case TvPage.routeName:
+              return MaterialPageRoute(builder: (_) => TvPage());
             default:
-              return MaterialPageRoute(builder: (_){
+              return MaterialPageRoute(builder: (_) {
                 return const Scaffold(
                   body: Center(
                     child: Text('Page not found!'),
@@ -91,4 +105,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
