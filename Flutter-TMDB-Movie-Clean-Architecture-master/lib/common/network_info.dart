@@ -14,6 +14,5 @@ class NetworkInfoImpl implements NetworkInfo{
 
   @override
   // TODO: implement isConnected
-  // Future<bool> get isConnected => true;
   Future<bool> get isConnected => connectionChecker.hasConnection;
 }

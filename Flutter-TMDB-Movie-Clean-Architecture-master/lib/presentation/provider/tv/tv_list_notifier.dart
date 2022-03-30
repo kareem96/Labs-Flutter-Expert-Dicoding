@@ -2,7 +2,6 @@
 
 import 'package:app_clean_architecture_flutter/common/state_enum.dart';
 import 'package:app_clean_architecture_flutter/domain/entities/tv/tv.dart';
-import 'package:app_clean_architecture_flutter/domain/entities/tv/tv_on_the_air.dart';
 import 'package:app_clean_architecture_flutter/domain/usecase/tv/get_tv_airing_today.dart';
 import 'package:app_clean_architecture_flutter/domain/usecase/tv/get_tv_on_the_air.dart';
 import 'package:flutter/cupertino.dart';

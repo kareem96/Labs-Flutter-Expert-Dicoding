@@ -1,6 +1,6 @@
 import 'package:app_clean_architecture_flutter/common/state_enum.dart';
 import 'package:app_clean_architecture_flutter/domain/entities/movie.dart';
-import 'package:app_clean_architecture_flutter/presentation/pages/movie_detail_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/movies/movie_detail_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/movie_detail_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

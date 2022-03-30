@@ -25,6 +25,7 @@ import 'package:app_clean_architecture_flutter/presentation/provider/popular_mov
 import 'package:app_clean_architecture_flutter/presentation/provider/top_rated_movies_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/tv/tv_detail_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/tv/tv_list_notifier.dart';
+import 'package:app_clean_architecture_flutter/presentation/provider/tv/tv_on_the_air_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
@@ -68,6 +69,10 @@ void init() {
   locator.registerFactory(() => WatchlistMovieNotifier(getWatchlistMovies: locator()));
 
   locator.registerFactory(() => TopRatedMoviesNotifier(getTopRatedMovies: locator()));
+
+
+  ///
+  locator.registerFactory(() => TvOnTheAirNotifier(getTvOnTheAir: locator()));
 
   ///use case movie
   locator.registerLazySingleton(() => GetNowPlayingMovies(locator()));

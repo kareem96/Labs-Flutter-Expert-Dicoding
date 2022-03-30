@@ -107,7 +107,7 @@ class ContentDetails extends StatelessWidget {
                                   }
                                   final message = Provider.of<MovieDetailNotifier>(context, listen: false).watchlistMessage;
                                   if(message == MovieDetailNotifier.watchlistAddSuccessMessage || message == MovieDetailNotifier.watchlistRemoveSuccessMessage){
-                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message), duration: const Duration(milliseconds: 300),));
                                   }else{
                                     showDialog(
                                         context: context,

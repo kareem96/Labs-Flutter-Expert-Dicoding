@@ -6,8 +6,6 @@ import 'package:app_clean_architecture_flutter/data/model/movie_detail_model.dar
 import 'package:app_clean_architecture_flutter/data/model/movie_model.dart';
 import 'package:app_clean_architecture_flutter/data/model/movie_response.dart';
 import 'package:app_clean_architecture_flutter/data/model/tv/tv_detail_model.dart';
-import 'package:app_clean_architecture_flutter/data/model/tv/tv_on_the_air_model.dart';
-import 'package:app_clean_architecture_flutter/data/model/tv/tv_on_the_air_response.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -27,7 +25,7 @@ abstract class MovieRemoteDataSource{
 
   ///TV
   Future<List<TvModel>> getTvAiringToday();
-  Future<List<TvOnTheAirModel>> getTvOnTheAir();
+  Future<List<TvModel>> getTvOnTheAir();
 }
 
 class MovieRemoteDataSourceImpl implements MovieRemoteDataSource{
@@ -135,11 +133,11 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource{
 
   ///
   @override
-  Future<List<TvOnTheAirModel>> getTvOnTheAir() async {
+  Future<List<TvModel>> getTvOnTheAir() async {
     // TODO: implement getTvOnTheAir
     final response = await client.get(Uri.parse('$BASE_URL/tv/on_the_air?$API_KEY'));
     if(response.statusCode == 200){
-      return TvOnTheAirResponse.fromJson(json.decode(response.body)).tvList;
+      return TvResponse.fromJson(json.decode(response.body)).tvList;
     }else{
       throw ServerException();
     }

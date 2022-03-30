@@ -10,7 +10,6 @@ import 'package:app_clean_architecture_flutter/data/datasources/local_data_sourc
 import 'package:app_clean_architecture_flutter/data/datasources/remote_data_source.dart';
 import 'package:app_clean_architecture_flutter/domain/entities/tv/tv.dart';
 import 'package:app_clean_architecture_flutter/domain/entities/tv/tv_detail.dart';
-import 'package:app_clean_architecture_flutter/domain/entities/tv/tv_on_the_air.dart';
 import 'package:app_clean_architecture_flutter/domain/repositories/tv_repository.dart';
 import 'package:dartz/dartz.dart';
 

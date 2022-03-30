@@ -6,7 +6,6 @@ import 'package:equatable/equatable.dart';
 class Tv extends Equatable {
   Tv({
     required this.backdropPath,
-    required this.firstAirDate,
     required this.genreIds,
     required this.id,
     required this.name,
@@ -21,14 +20,13 @@ class Tv extends Equatable {
   });
 
   String? backdropPath;
-  DateTime firstAirDate;
   List<int> genreIds;
   int id;
-  String name;
+  String? name;
   List<String> originCountry;
   String originalLanguage;
   String originalName;
-  String overview;
+  String? overview;
   double popularity;
   String? posterPath;
   double voteAverage;
@@ -39,7 +37,6 @@ class Tv extends Equatable {
   // TODO: implement props
   List<Object?> get props => [
     backdropPath,
-    firstAirDate,
     genreIds,
     id,
     name,

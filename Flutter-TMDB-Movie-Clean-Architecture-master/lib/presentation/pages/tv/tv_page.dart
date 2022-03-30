@@ -1,7 +1,7 @@
 
-import 'package:app_clean_architecture_flutter/presentation/pages/home_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/movies/home_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/tv/tv_detail_page.dart';
-import 'package:app_clean_architecture_flutter/presentation/pages/tv/tv_on_the_air/tv_on_the_air_list.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/tv/tv_on_the_air_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -106,7 +106,7 @@ class _TvPageState extends State<TvPage> {
               _buildSubHeading(
                   title: 'Tv On The Air',
                   onTap: () {
-                    // Navigator.pushNamed(context, PopularMoviesPage.routeName);
+                    Navigator.pushNamed(context, TvOnTheAirPage.routeName);
                   }
               ),
               Consumer<TvListNotifier>(
@@ -115,34 +115,18 @@ class _TvPageState extends State<TvPage> {
                   if(state == RequestState.Loading){
                     return const Center(child: CircularProgressIndicator(),);
                   }else if(state == RequestState.Loaded){
-                    return TvOnTheAirList(data.onTheAirTv);
+                    return TvList(data.onTheAirTv);
                   }else{
                     return Text(data.message);
                   }
                 },
               ),
-              /*_buildSubHeading(title: 'Top Rated', onTap: (){
-                Navigator.pushNamed(context, TopRatedMoviesPage.routeName);
-              }),*/
-              /*Consumer<MovieListNotifier>(
-                builder: (context, data, child){
-                  final state = data.topRatedMoviesState;
-                  if(state == RequestState.Loading){
-                    return const Center(child: CircularProgressIndicator(),);
-                  }else if(state == RequestState.Loaded){
-                    return MovieList(data.topRatedMovies);
-                  }else{
-                    return const Text('Failed');
-                  }
-                },
-              )*/
             ],
           ),
         ),
       ),
     );
   }
-
   Row _buildSubHeading({required String title, required Function() onTap}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -164,9 +148,7 @@ class _TvPageState extends State<TvPage> {
     );
   }
 
-
 }
-
 
 class TvList extends StatelessWidget {
   final List<Tv> tv;
@@ -187,7 +169,6 @@ class TvList extends StatelessWidget {
             child: InkWell(
               onTap: (){
                 debugPrint('${movieTv.id}');
-                // Navigator.pushNamed(context, MovieDetailPage.routeName, arguments: movieTv.id);
                 Navigator.pushNamed(context, TvDetailPage.routeName, arguments: movieTv.id);
               },
               child: ClipRRect(

@@ -30,7 +30,6 @@ class MovieRepositoryImpl implements MovieRepository{
   @override
   Future<Either<Failure, List<Movie>>> getNowPlaying() async {
     // TODO: implement getNowPlaying
-    // networkInfo.isConnected;
     if(await networkInfo.isConnected){
       try{
         final result = await remoteDataSource.getNowPlaying();

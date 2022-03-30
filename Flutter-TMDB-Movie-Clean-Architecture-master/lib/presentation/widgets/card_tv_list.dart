@@ -1,15 +1,15 @@
 
 
 import 'package:app_clean_architecture_flutter/common/constant.dart';
-import 'package:app_clean_architecture_flutter/domain/entities/movie.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../pages/movies/movie_detail_page.dart';
+import '../../domain/entities/tv/tv.dart';
+import '../pages/tv/tv_detail_page.dart';
 
-class CardList extends StatelessWidget {
-  final Movie movie;
-  const CardList(this.movie, {Key? key}) : super(key: key);
+class CardTvList extends StatelessWidget {
+  final Tv tv;
+  const CardTvList(this.tv, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class CardList extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
         onTap: (){
-          Navigator.pushNamed(context, MovieDetailPage.routeName, arguments: movie.id);
+          Navigator.pushNamed(context, TvDetailPage.routeName, arguments: tv.id);
         },
         child: Stack(
           alignment: Alignment.bottomLeft,
@@ -28,8 +28,8 @@ class CardList extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(movie.title ?? '-', maxLines: 1, overflow: TextOverflow.ellipsis, style: Heading6,),
-                    Text(movie.overview ?? '-', maxLines: 2, overflow: TextOverflow.ellipsis,),
+                    Text(tv.name ?? '-', maxLines: 1, overflow: TextOverflow.ellipsis, style: Heading6,),
+                    Text(tv.overview ?? '-', maxLines: 2, overflow: TextOverflow.ellipsis,),
                   ],
                 ),
               ),
@@ -38,13 +38,13 @@ class CardList extends StatelessWidget {
               margin: const EdgeInsets.only(left:16, bottom: 16),
               child: ClipRRect(
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
+                  imageUrl: '$BASE_IMAGE_URL${tv.posterPath}',
                   width: 80,
                   placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),
                   ),
                   errorWidget: (context, url, error) => const Icon(
-                    Icons.error
+                      Icons.error
                   ),
                 ),
                 borderRadius: const BorderRadius.all(Radius.circular(8)),

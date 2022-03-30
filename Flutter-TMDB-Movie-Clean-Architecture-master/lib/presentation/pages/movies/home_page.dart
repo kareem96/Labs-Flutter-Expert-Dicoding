@@ -1,20 +1,19 @@
 
-
-
 import 'package:app_clean_architecture_flutter/common/constant.dart';
 import 'package:app_clean_architecture_flutter/common/state_enum.dart';
 import 'package:app_clean_architecture_flutter/domain/entities/movie.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/about_page.dart';
-import 'package:app_clean_architecture_flutter/presentation/pages/movie_detail_page.dart';
-import 'package:app_clean_architecture_flutter/presentation/pages/popular_movies_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/movies/popular_movies_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/search_page.dart';
-import 'package:app_clean_architecture_flutter/presentation/pages/top_rated_movies_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/movies/top_rated_movies_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/tv/tv_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/watchlist_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/movie_list_notifier.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'movie_detail_page.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/movie_home';

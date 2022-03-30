@@ -3,7 +3,7 @@ import 'package:app_clean_architecture_flutter/presentation/provider/top_rated_m
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/card_list.dart';
+import '../../widgets/card_list.dart';
 
 class TopRatedMoviesPage extends StatefulWidget {
   static const routeName = '/top_rated_movies_page';

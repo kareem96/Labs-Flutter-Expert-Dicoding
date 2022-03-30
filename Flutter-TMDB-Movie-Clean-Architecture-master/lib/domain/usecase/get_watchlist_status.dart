@@ -1,6 +1,4 @@
 
-
-
 import 'package:app_clean_architecture_flutter/domain/repositories/movie_respository.dart';
 
 class GetWatchListStatus{

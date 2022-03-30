@@ -1,12 +1,13 @@
 import 'package:app_clean_architecture_flutter/common/constant.dart';
 import 'package:app_clean_architecture_flutter/common/utils.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/about_page.dart';
-import 'package:app_clean_architecture_flutter/presentation/pages/home_page.dart';
-import 'package:app_clean_architecture_flutter/presentation/pages/movie_detail_page.dart';
-import 'package:app_clean_architecture_flutter/presentation/pages/popular_movies_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/movies/home_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/movies/movie_detail_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/movies/popular_movies_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/search_page.dart';
-import 'package:app_clean_architecture_flutter/presentation/pages/top_rated_movies_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/movies/top_rated_movies_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/tv/tv_detail_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/tv/tv_on_the_air_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/tv/tv_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/watchlist_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/movie_detail_notifier.dart';
@@ -15,6 +16,7 @@ import 'package:app_clean_architecture_flutter/presentation/provider/movie_searc
 import 'package:app_clean_architecture_flutter/presentation/provider/popular_movies_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/top_rated_movies_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/tv/tv_list_notifier.dart';
+import 'package:app_clean_architecture_flutter/presentation/provider/tv/tv_on_the_air_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -54,6 +56,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TvListNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TvOnTheAirNotifier>(),
         )
       ],
       child: MaterialApp(
@@ -83,6 +88,8 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => PopularMoviesPage());
             case TopRatedMoviesPage.routeName:
               return MaterialPageRoute(builder: (_) => TopRatedMoviesPage());
+            case TvOnTheAirPage.routeName:
+              return MaterialPageRoute(builder: (_) => TvOnTheAirPage());
             case AboutPage.routeName:
               return MaterialPageRoute(builder: (_) => AboutPage());
             case SearchPage.routeName:

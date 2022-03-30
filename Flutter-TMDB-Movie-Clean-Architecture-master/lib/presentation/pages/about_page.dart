@@ -18,9 +18,13 @@ class AboutPage extends StatelessWidget {
                 child: Container(
                   color: Colors.indigo,
                   child: const Center(
-                    child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/ui.png'),
-                    ),
+                    child: SizedBox(
+                      height: 100,
+                      width: 100,
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage('assets/ui.png'),
+                      ),
+                    )
                   ),
                 ),
               ),
