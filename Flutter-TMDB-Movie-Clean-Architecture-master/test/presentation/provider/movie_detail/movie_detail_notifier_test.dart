@@ -196,14 +196,14 @@ void main() {
     });
 
     test('should update recommendation state when data is gotten successfully', () async {
-          ///arrange
-          _arrangeUsecase();
-          ///act
-          await provider.fetchMovieDetail(tId);
-          ///assert
-          expect(provider.recommenddationsState, RequestState.Loaded);
-          expect(provider.movieRecommendations, tMovies);
-        });
+      ///arrange
+      _arrangeUsecase();
+      ///act
+      await provider.fetchMovieDetail(tId);
+      ///assert
+      expect(provider.recommenddationsState, RequestState.Loaded);
+      expect(provider.movieRecommendations, tMovies);
+    });
 
     test('should update error message when request in successful', () async {
       ///arrange
@@ -217,5 +217,4 @@ void main() {
       expect(provider.message, 'Failed');
     });
   });
-
 }

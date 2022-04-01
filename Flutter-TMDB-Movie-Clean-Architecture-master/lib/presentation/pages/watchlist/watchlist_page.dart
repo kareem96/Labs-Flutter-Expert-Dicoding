@@ -67,32 +67,5 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware{
         },
       ),
     );
-    /*return Scaffold(
-      // appBar: AppBar(title: const Text('Watchlist'),),
-      body:
-      Padding(
-        padding: const EdgeInsets.all(8),
-        child: Consumer<WatchlistMovieNotifier>(
-          builder: (context, data, child){
-            if(data.watchlistState == RequestState.Loading){
-              return const Center(child: CircularProgressIndicator(),);
-            }else if(data.watchlistState == RequestState.Loaded){
-              return ListView.builder(
-                itemCount: data.watchlistMovie.length,
-                itemBuilder: (context, index){
-                  final movie = data.watchlistMovie[index];
-                  return CardList(movie);
-                },
-              );
-            }else{
-              return Center(
-                key: const Key('error_message'),
-                child: Text(data.message),
-              );
-            }
-          },
-        ),
-      ),
-    );*/
   }
 }

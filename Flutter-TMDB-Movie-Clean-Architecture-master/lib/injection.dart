@@ -70,7 +70,7 @@ void init() {
         getWatchlistStatusTv: locator(),
         saveWatchlistTv: locator(),
         removeWatchlistTv: locator(),
-        getWatchlistTv: locator(),
+
         getTvRecommendations: locator(),
       ));
 
@@ -98,9 +98,8 @@ void init() {
 
   ///
   locator.registerFactory(() => TvOnTheAirNotifier(getTvOnTheAir: locator()));
-  locator.registerFactory(
-      () => TvAiringTodayNotifier(getTvAiringToday: locator()));
-  locator.registerFactory(() => TvPopularNotifier(getTvPopular: locator()));
+  locator.registerFactory(() => TvAiringTodayNotifier(getTvAiringToday: locator()));
+  locator.registerFactory(() => TvPopularNotifier(locator()));
 
   ///use case movie
   locator.registerLazySingleton(() => GetNowPlayingMovies(locator()));
@@ -143,7 +142,6 @@ void init() {
 
   ///repository tv
   locator.registerLazySingleton<TvRepository>(() => TvRepositoryImpl(
-        localDataSource: locator(),
         remoteDataSource: locator(),
         tvLocalDataSource: locator(),
         networkInfo: locator(),

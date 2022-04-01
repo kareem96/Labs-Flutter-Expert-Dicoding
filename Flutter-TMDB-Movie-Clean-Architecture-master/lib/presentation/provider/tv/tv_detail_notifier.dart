@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import '../../../domain/usecase/tv/get_recommendations_tv.dart';
 import '../../../domain/usecase/tv/get_tv_detail.dart';
 import '../../../domain/usecase/tv/get_watchlist_status_tv.dart';
-import '../../../domain/usecase/tv/get_watchlist_tv.dart';
 import '../../../domain/usecase/tv/remove_watchlist_tv.dart';
 import '../../../domain/usecase/tv/save_watchlist_tv.dart';
 
@@ -18,14 +17,12 @@ class TvDetailNotifier extends ChangeNotifier{
 
   final GetRecommendationsTv getTvRecommendations;
   final GetTvDetail getTvDetail;
-  final GetWatchlistTv getWatchlistTv;
   final SaveWatchlistTv saveWatchlistTv;
   final GetWatchlistStatusTv getWatchlistStatusTv;
   final RemoveWatchlistTv removeWatchlistTv;
 
   TvDetailNotifier({
     required this.getTvDetail,
-    required this.getWatchlistTv,
     required this.getWatchlistStatusTv,
     required this.removeWatchlistTv,
     required this.saveWatchlistTv,

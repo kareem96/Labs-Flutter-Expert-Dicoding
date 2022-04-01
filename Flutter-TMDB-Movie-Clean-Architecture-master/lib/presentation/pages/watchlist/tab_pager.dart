@@ -64,7 +64,7 @@ class _TabPagerState extends State<TabPager> with SingleTickerProviderStateMixin
               ),
                Expanded(child: TabBarView(
                  controller: tabController,
-                 children: [
+                 children: const [
                    WatchlistPage(),
                    WatchlistTvPage()
                  ],

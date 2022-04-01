@@ -10,7 +10,7 @@ import '../../../domain/entities/tv/tv.dart';
 class TvPopularNotifier extends ChangeNotifier{
   final GetTvPopular getTvPopular;
 
-  TvPopularNotifier({required this.getTvPopular});
+  TvPopularNotifier(this.getTvPopular);
 
   String _message = '';
   String get message => _message;
@@ -22,8 +22,10 @@ class TvPopularNotifier extends ChangeNotifier{
   List<Tv> get popularTv => _popularTv;
 
   Future<void> fetchTvPopular() async{
-    final result = await getTvPopular.execute();
+    _state = RequestState.Loading;
+    notifyListeners();
 
+    final result = await getTvPopular.execute();
     result.fold((failure) {
       _state = RequestState.Error;
       _message = failure.message;

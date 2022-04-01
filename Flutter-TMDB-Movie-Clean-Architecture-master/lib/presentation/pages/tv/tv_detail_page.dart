@@ -1,7 +1,7 @@
 
 
 
-import 'package:app_clean_architecture_flutter/data/model/genre_model.dart';
+import 'package:app_clean_architecture_flutter/domain/entities/genre.dart';
 import 'package:app_clean_architecture_flutter/domain/entities/tv/tv.dart';
 import 'package:app_clean_architecture_flutter/domain/entities/tv/tv_detail.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/tv/tv_detail_notifier.dart';
@@ -252,7 +252,7 @@ class ContentDetails extends StatelessWidget {
     );
   }
 
-  String _showGenres(List<GenreModel> genres){
+  String _showGenres(List<Genre> genres){
     String result = '';
     for (var genre in genres){
       result += genre.name + ', ';

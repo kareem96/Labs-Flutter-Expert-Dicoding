@@ -20,10 +20,10 @@ import '../datasources/local/tv/local_data_source_tv.dart';
 class TvRepositoryImpl implements TvRepository{
   final MovieRemoteDataSource remoteDataSource;
   final NetworkInfo networkInfo;
-  final MovieLocalDataSource localDataSource;
+
   final TvLocalDataSource tvLocalDataSource;
   TvRepositoryImpl({
-    required this.localDataSource,
+
     required this.remoteDataSource,
     required this.tvLocalDataSource,
     required this.networkInfo});

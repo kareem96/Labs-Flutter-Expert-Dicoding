@@ -43,8 +43,8 @@ class TvDetailModel extends Equatable {
   DateTime lastAirDate;
   String name;
   dynamic nextEpisodeToAir;
-  int numberOfEpisodes;
-  int numberOfSeasons;
+  int? numberOfEpisodes;
+  int? numberOfSeasons;
   String originalLanguage;
   String originalName;
   String overview;
@@ -112,16 +112,13 @@ class TvDetailModel extends Equatable {
     return TvDetail(
 
         seasons: seasons,
-        genres: genres,
+        genres: genres.map((e) => e.toEntity()).toList(),
         adult: adult,
         backdropPath: backdropPath,
-        firstAirDate: firstAirDate,
         homepage: homepage,
         id: id,
         inProduction: inProduction,
-        lastAirDate: lastAirDate,
         name: name,
-        nextEpisodeToAir: nextEpisodeToAir,
         numberOfEpisodes: numberOfEpisodes,
         numberOfSeasons: numberOfSeasons,
         originalLanguage: originalLanguage,
@@ -201,24 +198,4 @@ class Season {
     "season_number": seasonNumber,
   };
 }
-
-/*class Genre {
-  Genre({
-    required this.id,
-    required this.name,
-  });
-
-  int id;
-  String name;
-
-  factory Genre.fromJson(Map<String, dynamic> json) => Genre(
-    id: json["id"],
-    name: json["name"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-  };
-}*/
 

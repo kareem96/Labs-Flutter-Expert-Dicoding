@@ -224,8 +224,7 @@ void main() {
           expect(resultList, tMovieList);
         });
 
-    test('should return ServerFailure when call to data source is unsuccessful',
-            () async {
+    test('should return ServerFailure when call to data source is unsuccessful', () async {
           ///arrange
           when(mockRemoteDataSource.searchMovies(tQuery))
               .thenThrow(ServerException());
