@@ -4,19 +4,28 @@ import 'package:app_clean_architecture_flutter/presentation/pages/about_page.dar
 import 'package:app_clean_architecture_flutter/presentation/pages/movies/home_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/movies/movie_detail_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/movies/popular_movies_page.dart';
-import 'package:app_clean_architecture_flutter/presentation/pages/search_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/search/search_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/movies/top_rated_movies_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/search/search_tv_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/tv/airing_today_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/tv/popular_tv_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/tv/tv_detail_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/tv/tv_on_the_air_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/tv/tv_page.dart';
-import 'package:app_clean_architecture_flutter/presentation/pages/watchlist_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/watchlist/tab_pager.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/watchlist/watchlist_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/watchlist/watchlist_tv_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/movie_detail_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/movie_list_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/movie_search_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/popular_movies_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/top_rated_movies_notifier.dart';
+import 'package:app_clean_architecture_flutter/presentation/provider/tv/tv_airing_today_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/tv/tv_list_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/tv/tv_on_the_air_notifier.dart';
+import 'package:app_clean_architecture_flutter/presentation/provider/tv/tv_popular_notifier.dart';
+import 'package:app_clean_architecture_flutter/presentation/provider/tv/tv_search_notifier.dart';
+import 'package:app_clean_architecture_flutter/presentation/provider/tv/watchlist_tv_notifier.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +58,13 @@ class MyApp extends StatelessWidget {
           create: (_) => di.locator<MovieSearchNotifier>(),
         ),
         ChangeNotifierProvider(
+          create: (_) => di.locator<TvSearchNotifier>(),
+        ),
+        ChangeNotifierProvider(
           create: (_) => di.locator<WatchlistMovieNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<WatchlistTvNotifier>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TopRatedMoviesNotifier>(),
@@ -59,7 +74,14 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TvOnTheAirNotifier>(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TvAiringTodayNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TvPopularNotifier>(),
+        ),
+
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -90,12 +112,22 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => TopRatedMoviesPage());
             case TvOnTheAirPage.routeName:
               return MaterialPageRoute(builder: (_) => TvOnTheAirPage());
+            case AiringTodayPage.routeName:
+              return MaterialPageRoute(builder: (_) => AiringTodayPage());
+            case PopularTvPage.routeName:
+              return MaterialPageRoute(builder: (_) => PopularTvPage());
             case AboutPage.routeName:
               return MaterialPageRoute(builder: (_) => AboutPage());
             case SearchPage.routeName:
               return MaterialPageRoute(builder: (_) => SearchPage());
+            case SearchTvPage.routeName:
+              return MaterialPageRoute(builder: (_) => SearchTvPage());
             case WatchlistPage.routeName:
               return MaterialPageRoute(builder: (_) => WatchlistPage());
+            case WatchlistTvPage.routeName:
+              return MaterialPageRoute(builder: (_) => WatchlistTvPage());
+            case TabPager.routeName:
+              return MaterialPageRoute(builder: (_) => TabPager());
             case TvPage.routeName:
               return MaterialPageRoute(builder: (_) => TvPage());
             default:

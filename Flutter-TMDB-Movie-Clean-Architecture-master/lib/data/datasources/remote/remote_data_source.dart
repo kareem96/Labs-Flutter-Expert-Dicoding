@@ -1,6 +1,8 @@
 
 
 
+import 'dart:async';
+
 import 'package:app_clean_architecture_flutter/common/exception.dart';
 import 'package:app_clean_architecture_flutter/data/model/movie_detail_model.dart';
 import 'package:app_clean_architecture_flutter/data/model/movie_model.dart';
@@ -9,23 +11,29 @@ import 'package:app_clean_architecture_flutter/data/model/tv/tv_detail_model.dar
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../model/tv/tv_model.dart';
-import '../model/tv/tv_response.dart';
+import '../../model/tv/tv_model.dart';
+import '../../model/tv/tv_response.dart';
 
 abstract class MovieRemoteDataSource{
   ///Movies
   Future<List<MovieModel>> getNowPlaying();
   Future<List<MovieModel>> getMovieRecommendations(int id);
   Future<List<MovieModel>> getPopularMovies();
-  Future<List<MovieModel>> searchMovies(String query);
   Future<List<MovieModel>> getTopRatedMovies();
 
+  ///
+  Future<List<MovieModel>> searchMovies(String query);
+  Future<List<TvModel>> searchTv(String query);
+
+  ///
   Future<MovieDetailModel> getDetailMovie(int id);
   Future<TvDetailModel> getDetailTv(int id);
 
   ///TV
   Future<List<TvModel>> getTvAiringToday();
   Future<List<TvModel>> getTvOnTheAir();
+  Future<List<TvModel>> getTvTopRated();
+  Future<List<TvModel>> getTvPopular();
 }
 
 class MovieRemoteDataSourceImpl implements MovieRemoteDataSource{
@@ -42,6 +50,17 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource{
     final response = await client.get(Uri.parse('$BASE_URL/search/movie?$API_KEY&query=$query'));
     if(response.statusCode == 200){
       return MovieResponse.fromJson(json.decode(response.body)).movieList;
+    }else{
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<List<TvModel>> searchTv(String query) async{
+    // TODO: implement searchTv
+    final response = await client.get(Uri.parse('$BASE_URL/search/tv?$API_KEY&query=$query'));
+    if(response.statusCode == 200){
+      return TvResponse.fromJson(json.decode(response.body)).tvList;
     }else{
       throw ServerException();
     }
@@ -142,6 +161,30 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource{
       throw ServerException();
     }
   }
+
+  @override
+  Future<List<TvModel>> getTvPopular() async{
+    // TODO: implement getTvPopular
+    final response = await client.get(Uri.parse('$BASE_URL/tv/popular?$API_KEY'));
+    if(response.statusCode == 200){
+      return TvResponse.fromJson(json.decode(response.body)).tvList;
+    }else{
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<List<TvModel>> getTvTopRated() async{
+    // TODO: implement getTvTopRated
+    final response = await client.get(Uri.parse('$BASE_URL/tv/top_rated?$API_KEY'));
+    if(response.statusCode == 200){
+      return TvResponse.fromJson(json.decode(response.body)).tvList;
+    }else{
+      throw ServerException();
+    }
+  }
+
+
 
 
 

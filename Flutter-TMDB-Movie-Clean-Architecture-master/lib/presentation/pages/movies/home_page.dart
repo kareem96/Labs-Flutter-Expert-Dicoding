@@ -4,10 +4,11 @@ import 'package:app_clean_architecture_flutter/common/state_enum.dart';
 import 'package:app_clean_architecture_flutter/domain/entities/movie.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/about_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/movies/popular_movies_page.dart';
-import 'package:app_clean_architecture_flutter/presentation/pages/search_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/search/search_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/movies/top_rated_movies_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/tv/tv_page.dart';
-import 'package:app_clean_architecture_flutter/presentation/pages/watchlist_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/watchlist/tab_pager.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/watchlist/watchlist_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/movie_list_notifier.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +67,8 @@ class _HomePageState extends State<HomePage> {
               leading: const Icon(Icons.save_alt_outlined),
               title: const Text('Watchlist'),
               onTap: (){
-                Navigator.pushNamed(context, WatchlistPage.routeName);
+                // Navigator.pushNamed(context, WatchlistPage.routeName);
+                Navigator.pushNamed(context, TabPager.routeName);
               },
             ),
             ListTile(

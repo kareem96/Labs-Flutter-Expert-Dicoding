@@ -5,7 +5,7 @@
 import 'dart:convert';
 
 import 'package:app_clean_architecture_flutter/common/exception.dart';
-import 'package:app_clean_architecture_flutter/data/datasources/remote_data_source.dart';
+import 'package:app_clean_architecture_flutter/data/datasources/remote/remote_data_source.dart';
 import 'package:app_clean_architecture_flutter/data/model/movie_detail_model.dart';
 import 'package:app_clean_architecture_flutter/data/model/movie_response.dart';
 import 'package:flutter_test/flutter_test.dart';

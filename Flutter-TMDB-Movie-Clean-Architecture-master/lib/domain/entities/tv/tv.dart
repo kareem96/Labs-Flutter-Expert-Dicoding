@@ -19,18 +19,25 @@ class Tv extends Equatable {
     required this.voteCount,
   });
 
+  Tv.watchlist({
+    required this.id,
+    required this.name,
+    required this.posterPath,
+    required this.overview,
+});
+
   String? backdropPath;
-  List<int> genreIds;
+  List<int>? genreIds;
   int id;
   String? name;
-  List<String> originCountry;
-  String originalLanguage;
-  String originalName;
+  List<String>? originCountry;
+  String? originalLanguage;
+  String? originalName;
   String? overview;
-  double popularity;
+  double? popularity;
   String? posterPath;
-  double voteAverage;
-  int voteCount;
+  double? voteAverage;
+  int? voteCount;
 
 
   @override

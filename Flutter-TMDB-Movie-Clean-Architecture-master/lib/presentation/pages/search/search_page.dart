@@ -20,7 +20,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Search'),),
+      appBar: AppBar(title: const Text('Search Movie'),),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -32,7 +32,7 @@ class _SearchPageState extends State<SearchPage> {
                 Provider.of<MovieSearchNotifier>(context, listen: false).fetchMovieSearch(query);
               },
               decoration: const InputDecoration(
-                hintText: 'Search title',
+                hintText: 'Search Movie',
                 prefixIcon: Icon(Icons.search_outlined),
                 border: OutlineInputBorder(),
               ),

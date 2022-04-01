@@ -11,9 +11,9 @@ import 'package:app_clean_architecture_flutter/common/network_info.dart'
     as _i16;
 import 'package:app_clean_architecture_flutter/data/datasources/db/database_helper.dart'
     as _i14;
-import 'package:app_clean_architecture_flutter/data/datasources/local_data_source.dart'
+import 'package:app_clean_architecture_flutter/data/datasources/local/local_data_source.dart'
     as _i12;
-import 'package:app_clean_architecture_flutter/data/datasources/remote_data_source.dart'
+import 'package:app_clean_architecture_flutter/data/datasources/remote/remote_data_source.dart'
     as _i10;
 import 'package:app_clean_architecture_flutter/data/model/movie_detail_model.dart'
     as _i3;

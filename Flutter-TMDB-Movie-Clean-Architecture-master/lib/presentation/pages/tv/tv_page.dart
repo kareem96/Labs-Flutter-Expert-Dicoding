@@ -1,5 +1,6 @@
-
 import 'package:app_clean_architecture_flutter/presentation/pages/movies/home_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/tv/airing_today_page.dart';
+import 'package:app_clean_architecture_flutter/presentation/pages/tv/popular_tv_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/tv/tv_detail_page.dart';
 import 'package:app_clean_architecture_flutter/presentation/pages/tv/tv_on_the_air_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -10,11 +11,12 @@ import '../../../common/state_enum.dart';
 import '../../../domain/entities/tv/tv.dart';
 import '../../provider/tv/tv_list_notifier.dart';
 import '../about_page.dart';
-import '../search_page.dart';
-import '../watchlist_page.dart';
+import '../search/search_tv_page.dart';
+import '../watchlist/tab_pager.dart';
 
 class TvPage extends StatefulWidget {
   static const routeName = '/tv_home';
+
   const TvPage({Key? key}) : super(key: key);
 
   @override
@@ -22,13 +24,14 @@ class TvPage extends StatefulWidget {
 }
 
 class _TvPageState extends State<TvPage> {
-
   @override
   void initState() {
     super.initState();
     Future.microtask(() => Provider.of<TvListNotifier>(context, listen: false)
       ..fetchAiringTodayTv()
       ..fetchOnTheAirTv()
+      ..fetchPopularTv()
+      ..fetchTopRatedTv()
     );
   }
 
@@ -37,14 +40,13 @@ class _TvPageState extends State<TvPage> {
     return Scaffold(
       drawer: Drawer(
         child: Column(
-          children:  [
+          children: [
             const UserAccountsDrawerHeader(
                 currentAccountPicture: CircleAvatar(
                   backgroundImage: AssetImage('assets/ui.png'),
                 ),
                 accountName: Text('Nonton Kuy'),
-                accountEmail: Text('')
-            ),
+                accountEmail: Text('')),
             ListTile(
               leading: const Icon(Icons.movie_outlined),
               title: const Text('Movies'),
@@ -61,25 +63,27 @@ class _TvPageState extends State<TvPage> {
             ListTile(
               leading: const Icon(Icons.save_alt_outlined),
               title: const Text('Watchlist'),
-              onTap: (){
-                Navigator.pushNamed(context, WatchlistPage.routeName);
+              onTap: () {
+                // Navigator.pushNamed(context, WatchlistPage.routeName);
+                Navigator.pushNamed(context, TabPager.routeName);
               },
             ),
             ListTile(
               leading: const Icon(Icons.info_outlined),
               title: const Text('About'),
-              onTap: (){
+              onTap: () {
                 Navigator.pushNamed(context, AboutPage.routeName);
               },
             )
           ],
         ),
       ),
-      appBar: AppBar(title: const Text('Nonton Kuy'),
+      appBar: AppBar(
+        title: const Text('Nonton Kuy'),
         actions: [
           IconButton(
-              onPressed: (){
-                Navigator.pushNamed(context, SearchPage.routeName);
+              onPressed: () {
+                Navigator.pushNamed(context, SearchTvPage.routeName);
               },
               icon: const Icon(Icons.search)),
         ],
@@ -90,7 +94,68 @@ class _TvPageState extends State<TvPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Tv Airing Today', style: Heading6,),
+              Text(
+                'Tv Top Rated',
+                style: Heading6,
+              ),
+              Consumer<TvListNotifier>(
+                builder: (context, data, child) {
+                  final state = data.topRatedTvState;
+                  if (state == RequestState.Loading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state == RequestState.Loaded) {
+                    return TvList(data.topRatedTv);
+                  } else {
+                    return Text(data.message);
+                  }
+                },
+              ),
+              _buildSubHeading(
+                  title: 'Tv Popular',
+                  onTap: () {
+                    Navigator.pushNamed(context, PopularTvPage.routeName);
+                  }),
+              Consumer<TvListNotifier>(
+                builder: (context, data, child) {
+                  final state = data.popularTvState;
+                  if (state == RequestState.Loading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state == RequestState.Loaded) {
+                    return TvList(data.popularTv);
+                  } else {
+                    return Text(data.message);
+                  }
+                },
+              ),
+              _buildSubHeading(
+                  title: 'Tv On The Air',
+                  onTap: () {
+                    Navigator.pushNamed(context, TvOnTheAirPage.routeName);
+                  }),
+              Consumer<TvListNotifier>(
+                builder: (context, data, child) {
+                  final state = data.onTheAirTvState;
+                  if (state == RequestState.Loading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state == RequestState.Loaded) {
+                    return TvList(data.onTheAirTv);
+                  } else {
+                    return Text(data.message);
+                  }
+                },
+              ),
+
+              _buildSubHeading(
+                  title: 'Tv Airing Today',
+                  onTap: () {
+                    Navigator.pushNamed(context, AiringTodayPage.routeName);
+                  }),
               Consumer<TvListNotifier>(builder: (context, data, child) {
                 final state = data.airingTodayState;
                 if (state == RequestState.Loading) {
@@ -103,51 +168,33 @@ class _TvPageState extends State<TvPage> {
                   return Text(data.message);
                 }
               }),
-              _buildSubHeading(
-                  title: 'Tv On The Air',
-                  onTap: () {
-                    Navigator.pushNamed(context, TvOnTheAirPage.routeName);
-                  }
-              ),
-              Consumer<TvListNotifier>(
-                builder: (context, data, child){
-                  final state = data.onTheAirTvState;
-                  if(state == RequestState.Loading){
-                    return const Center(child: CircularProgressIndicator(),);
-                  }else if(state == RequestState.Loaded){
-                    return TvList(data.onTheAirTv);
-                  }else{
-                    return Text(data.message);
-                  }
-                },
-              ),
             ],
           ),
         ),
       ),
     );
   }
+
   Row _buildSubHeading({required String title, required Function() onTap}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title, style: Heading6,),
+        Text(
+          title,
+          style: Heading6,
+        ),
         InkWell(
           onTap: onTap,
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Row(
-              children: const [
-                Text('See more'),
-                Icon(Icons.arrow_forward_ios)
-              ],
+              children: const [Text('See more'), Icon(Icons.arrow_forward_ios)],
             ),
           ),
         )
       ],
     );
   }
-
 }
 
 class TvList extends StatelessWidget {
@@ -162,14 +209,15 @@ class TvList extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: tv.length,
-        itemBuilder: (context, index){
+        itemBuilder: (context, index) {
           final movieTv = tv[index];
           return Container(
             padding: const EdgeInsets.all(8),
             child: InkWell(
-              onTap: (){
+              onTap: () {
                 debugPrint('${movieTv.id}');
-                Navigator.pushNamed(context, TvDetailPage.routeName, arguments: movieTv.id);
+                Navigator.pushNamed(context, TvDetailPage.routeName,
+                    arguments: movieTv.id);
               },
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(16)),

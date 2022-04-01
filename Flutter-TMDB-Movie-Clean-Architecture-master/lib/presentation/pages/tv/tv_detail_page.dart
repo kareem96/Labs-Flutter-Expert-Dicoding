@@ -27,6 +27,7 @@ class _TvDetailPageState extends State<TvDetailPage> {
     super.initState();
     Future.microtask(() {
       Provider.of<TvDetailNotifier>(context, listen: false).fetchTvDetail(widget.id);
+      Provider.of<TvDetailNotifier>(context, listen: false).loadWatchlistStatusTv(widget.id);
 
     });
   }
@@ -45,6 +46,7 @@ class _TvDetailPageState extends State<TvDetailPage> {
             return SafeArea(
               child: ContentDetails(
                 movie,
+                provider.isAddedToWatchListTv
               ),
             );
           } else {
@@ -59,7 +61,8 @@ class _TvDetailPageState extends State<TvDetailPage> {
 
 class ContentDetails extends StatelessWidget {
   final TvDetail tvDetail;
-  ContentDetails(this.tvDetail,);
+  final bool isAddedWatchlistTv;
+  ContentDetails(this.tvDetail, this.isAddedWatchlistTv);
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +97,35 @@ class ContentDetails extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(tvDetail.name),
+                            ElevatedButton(
+                                onPressed: ()async{
+                                  if(!isAddedWatchlistTv){
+                                    await Provider.of<TvDetailNotifier>(context, listen: false).addWatchlist(tvDetail);
+                                  }else{
+                                    await Provider.of<TvDetailNotifier>(context, listen: false).removeFromWatchlistTv(tvDetail);
+                                  }
+                                  final message = Provider.of<TvDetailNotifier>(context, listen: false).watchlistMessageTv;
+                                  if(message == TvDetailNotifier.watchlistAddSuccessMessage || message == TvDetailNotifier.watchlistRemoveSuccessMessage){
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message), duration: const Duration(milliseconds: 300),));
+                                  }else{
+                                    showDialog(
+                                        context: context,
+                                        builder: (context){
+                                          return AlertDialog(
+                                            content: Text(message),
+                                          );
+                                        }
+                                    );
+                                  }
+                                },
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    isAddedWatchlistTv ? const Icon(Icons.check) : const Icon(Icons.add),
+                                    const Text('Watchlist')
+                                  ],
+                                )
+                            ),
                             Text(_showGenres(tvDetail.genres)),
                             Row(
                               children: [
