@@ -17,9 +17,12 @@ import '../../model/tv/tv_response.dart';
 abstract class MovieRemoteDataSource{
   ///Movies
   Future<List<MovieModel>> getNowPlaying();
-  Future<List<MovieModel>> getMovieRecommendations(int id);
   Future<List<MovieModel>> getPopularMovies();
   Future<List<MovieModel>> getTopRatedMovies();
+
+  ///
+  Future<List<MovieModel>> getMovieRecommendations(int id);
+  Future<List<TvModel>> getTvRecommendations(int id);
 
   ///
   Future<List<MovieModel>> searchMovies(String query);
@@ -107,6 +110,15 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource{
     final response = await client.get(Uri.parse('$BASE_URL/movie/$id/recommendations?$API_KEY'));
     if(response.statusCode == 200){
       return MovieResponse.fromJson(json.decode(response.body)).movieList;
+    }
+    throw ServerException();
+  }
+
+  @override
+  Future<List<TvModel>> getTvRecommendations(int id) async {
+    final response = await client.get(Uri.parse('$BASE_URL/tv/$id/recommendations?$API_KEY'));
+    if(response.statusCode == 200){
+      return TvResponse.fromJson(json.decode(response.body)).tvList;
     }
     throw ServerException();
   }

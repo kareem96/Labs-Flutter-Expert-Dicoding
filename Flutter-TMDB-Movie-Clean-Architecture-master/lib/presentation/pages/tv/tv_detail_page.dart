@@ -1,6 +1,8 @@
 
 
 
+import 'package:app_clean_architecture_flutter/data/model/genre_model.dart';
+import 'package:app_clean_architecture_flutter/domain/entities/tv/tv.dart';
 import 'package:app_clean_architecture_flutter/domain/entities/tv/tv_detail.dart';
 import 'package:app_clean_architecture_flutter/presentation/provider/tv/tv_detail_notifier.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -46,7 +48,8 @@ class _TvDetailPageState extends State<TvDetailPage> {
             return SafeArea(
               child: ContentDetails(
                 movie,
-                provider.isAddedToWatchListTv
+                provider.isAddedToWatchListTv,
+                provider.tvRecommendation,
               ),
             );
           } else {
@@ -62,7 +65,8 @@ class _TvDetailPageState extends State<TvDetailPage> {
 class ContentDetails extends StatelessWidget {
   final TvDetail tvDetail;
   final bool isAddedWatchlistTv;
-  ContentDetails(this.tvDetail, this.isAddedWatchlistTv);
+  final List<Tv> recommendation;
+  ContentDetails(this.tvDetail, this.isAddedWatchlistTv, this.recommendation);
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +147,48 @@ class ContentDetails extends StatelessWidget {
                             Text(tvDetail.overview),
                             const SizedBox(height: 16,),
                             Text('Seasons', style: Heading6,),
-                            _buildSeason(context, tvDetail.seasons)
+                            _buildSeason(context, tvDetail.seasons),
+                            Text('Recommendations', style: Heading6,),
+                            Consumer<TvDetailNotifier>(
+                              builder: (context, data, child){
+                                if(data.tvRecommendationState == RequestState.Loading){
+                                  return const Center(child: CircularProgressIndicator(),);
+                                }else if(data.tvRecommendationState == RequestState.Error){
+                                  return Text(data.message);
+                                }else if(data.tvRecommendationState == RequestState.Loaded){
+                                  return SizedBox(
+                                    height: 150,
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: recommendation.length,
+                                      itemBuilder: (context, index){
+                                        final movie = recommendation[index];
+                                        return Padding(
+                                          padding: const EdgeInsets.all(4),
+                                          child: InkWell(
+                                            onTap: (){
+                                              Navigator.pushReplacementNamed(context, TvDetailPage.routeName, arguments: movie.id);
+                                            },
+                                            child: ClipRRect(
+                                              borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                              child: CachedNetworkImage(
+                                                imageUrl: 'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                                                placeholder: (context, url) => const Center(
+                                                  child: CircularProgressIndicator(),
+                                                ),
+                                                errorWidget: (context, url, error) => const Icon(Icons.error),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                }else{
+                                  return Container();
+                                }
+                              },
+                            )
                           ],
                         ),
                       ),
@@ -207,7 +252,7 @@ class ContentDetails extends StatelessWidget {
     );
   }
 
-  String _showGenres(List<Genre> genres){
+  String _showGenres(List<GenreModel> genres){
     String result = '';
     for (var genre in genres){
       result += genre.name + ', ';

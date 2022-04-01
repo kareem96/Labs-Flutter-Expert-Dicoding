@@ -14,6 +14,8 @@ abstract class TvRepository{
 
   Future<Either<Failure, List<Tv>>> searchTv(String query);
 
+  Future<Either<Failure, List<Tv>>> getRecommendationsTv(int id);
+
   ///
   Future<Either<Failure, String>> saveWatchlistTv(TvDetail tvDetail);
   Future<Either<Failure, String>> removeWatchlistTv(TvDetail tvDetail);

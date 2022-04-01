@@ -2,6 +2,7 @@
 
 
 
+import 'package:app_clean_architecture_flutter/data/model/genre_model.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../data/model/tv/tv_detail_model.dart';
@@ -17,7 +18,6 @@ class TvDetail extends Equatable {
     required this.id,
     required this.inProduction,
     required this.lastAirDate,
-    required this.lastEpisodeToAir,
     required this.name,
     required this.nextEpisodeToAir,
     required this.numberOfEpisodes,
@@ -34,7 +34,7 @@ class TvDetail extends Equatable {
     required this.voteCount,
   });
 
-  List<Genre> genres;
+  List<GenreModel> genres;
   List<Season> seasons;
   bool adult;
   String backdropPath;
@@ -43,7 +43,6 @@ class TvDetail extends Equatable {
   int id;
   bool inProduction;
   DateTime lastAirDate;
-  LastEpisodeToAir lastEpisodeToAir;
   String name;
   dynamic nextEpisodeToAir;
   int numberOfEpisodes;
@@ -71,7 +70,6 @@ class TvDetail extends Equatable {
     id,
     inProduction,
     lastAirDate,
-    lastEpisodeToAir,
     name,
     nextEpisodeToAir,
     numberOfEpisodes,
