@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 
 import '../../../common/constant.dart';
 import '../../../common/state_enum.dart';
-import '../../../data/model/tv/tv_detail_model.dart';
+import '../../../domain/entities/tv/season.dart';
 
 class TvDetailPage extends StatefulWidget {
   static const routeName = '/page_detail_tv';

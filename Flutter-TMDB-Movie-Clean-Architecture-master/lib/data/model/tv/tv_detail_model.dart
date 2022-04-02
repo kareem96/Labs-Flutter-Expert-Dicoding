@@ -1,4 +1,5 @@
 
+import 'package:app_clean_architecture_flutter/data/model/tv/season_model.dart';
 import 'package:app_clean_architecture_flutter/domain/entities/tv/tv_detail.dart';
 import 'package:equatable/equatable.dart';
 import '../genre_model.dart';
@@ -32,7 +33,7 @@ class TvDetailModel extends Equatable {
   });
 
   List<GenreModel> genres;
-  List<Season> seasons;
+  List<SeasonModel> seasons;
 
   bool adult;
   String backdropPath;
@@ -57,11 +58,11 @@ class TvDetailModel extends Equatable {
   int voteCount;
 
   factory TvDetailModel.fromJson(Map<String, dynamic> json) => TvDetailModel(
-    seasons: List<Season>.from(json["seasons"].map((x) => Season.fromJson(x))),
+    seasons: List<SeasonModel>.from(json["seasons"].map((x) => SeasonModel.fromJson(x))),
+    genres: List<GenreModel>.from(json["genres"].map((x) => GenreModel.fromJson(x))),
     adult: json["adult"],
     backdropPath: json["backdrop_path"],
     firstAirDate: DateTime.parse(json["first_air_date"]),
-    genres: List<GenreModel>.from(json["genres"].map((x) => GenreModel.fromJson(x))),
     homepage: json["homepage"],
     id: json["id"],
     inProduction: json["in_production"],
@@ -111,7 +112,7 @@ class TvDetailModel extends Equatable {
   TvDetail toEntity(){
     return TvDetail(
 
-        seasons: seasons,
+        seasons: seasons.map((e) => e.toEntity()).toList(),
         genres: genres.map((e) => e.toEntity()).toList(),
         adult: adult,
         backdropPath: backdropPath,
@@ -163,7 +164,7 @@ class TvDetailModel extends Equatable {
   ];
 }
 
-class Season {
+/*class Season {
   Season({
     required this.episodeCount,
     required this.id,
@@ -197,5 +198,5 @@ class Season {
     "poster_path": posterPath,
     "season_number": seasonNumber,
   };
-}
+}*/
 

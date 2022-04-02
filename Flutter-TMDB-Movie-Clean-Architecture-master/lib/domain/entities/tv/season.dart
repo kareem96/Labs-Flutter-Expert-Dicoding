@@ -17,7 +17,7 @@ class Season extends Equatable {
   int id;
   String name;
   String overview;
-  String posterPath;
+  String? posterPath;
   int seasonNumber;
 
 

@@ -2,9 +2,8 @@
 
 
 
+import 'package:app_clean_architecture_flutter/domain/entities/tv/season.dart';
 import 'package:equatable/equatable.dart';
-
-import '../../../data/model/tv/tv_detail_model.dart';
 import '../genre.dart';
 
 class TvDetail extends Equatable {

@@ -72,8 +72,6 @@ void main() {
     title: 'Spider-Man',
   );
 
-
-
   final tMovieModelList = <MovieModel>[tMovieModel];
   final tMovieList = <Movie>[tMovie];
 
@@ -209,7 +207,6 @@ void main() {
         });
   });
 
-
   group('Search Movies', () {
     final tQuery = 'spiderman';
 
@@ -232,6 +229,34 @@ void main() {
           final result = await repository.searchMovies(tQuery);
           ///assert
           expect(result, Left(ServerFailure('')));
+        });
+
+  });
+
+  group('Get Movie Recommendations', () {
+    final tMovieList = <MovieModel>[];
+    final tId = 1;
+
+    test('should return data (movie list) when the call is successful', () async {
+          /// arrange
+          when(mockRemoteDataSource.getMovieRecommendations(tId)).thenAnswer((_) async => tMovieList);
+          /// act
+          final result = await repository.getMovieRecommendations(tId);
+          /// assert
+          verify(mockRemoteDataSource.getMovieRecommendations(tId));
+          /* workaround to test List in Right. Issue: https://github.com/spebbe/dartz/issues/80 */
+          final resultList = result.getOrElse(() => []);
+          expect(resultList, equals(tMovieList));
+        });
+
+    test('should return server failure when call to remote data source is unsuccessful', () async {
+          /// arrange
+          when(mockRemoteDataSource.getMovieRecommendations(tId)).thenThrow(ServerException());
+          /// act
+          final result = await repository.getMovieRecommendations(tId);
+          /// assertbuild runner
+          verify(mockRemoteDataSource.getMovieRecommendations(tId));
+          expect(result, equals(Left(ServerFailure(''))));
         });
 
   });

@@ -1,6 +1,7 @@
 
 
 
+import 'package:app_clean_architecture_flutter/domain/entities/tv/season.dart';
 import 'package:equatable/equatable.dart';
 
 class SeasonModel extends Equatable {
@@ -17,7 +18,7 @@ class SeasonModel extends Equatable {
   int id;
   String name;
   String overview;
-  String posterPath;
+  String? posterPath;
   int seasonNumber;
 
   factory SeasonModel.fromJson(Map<String, dynamic> json) => SeasonModel(
@@ -37,6 +38,15 @@ class SeasonModel extends Equatable {
     "poster_path": posterPath,
     "season_number": seasonNumber,
   };
+
+  Season toEntity() => Season(
+      episodeCount: episodeCount,
+      id: id,
+      name: name,
+      overview: overview,
+      posterPath: posterPath,
+      seasonNumber: seasonNumber
+  );
 
   @override
   // TODO: implement props

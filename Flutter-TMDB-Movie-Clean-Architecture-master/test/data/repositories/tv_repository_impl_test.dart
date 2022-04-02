@@ -1,5 +1,7 @@
 
 
+import 'dart:io';
+
 import 'package:app_clean_architecture_flutter/common/exception.dart';
 import 'package:app_clean_architecture_flutter/common/failure.dart';
 import 'package:app_clean_architecture_flutter/data/model/tv/tv_model.dart';
@@ -62,6 +64,25 @@ void main(){
   final tvModelList = <TvModel>[tvModel];
   final tvList = <Tv>[tv];
 
+
+  group('Get Movie Recommendations', () {
+    final tMovieList = <TvModel>[];
+    final tId = 1;
+
+    test('should return data (tv list) when the call is successful', () async {
+      /// arrange
+      when(mockMovieRemoteDataSource.getTvRecommendations(tId)).thenAnswer((_) async => tMovieList);
+      /// act
+      final result = await repository.getRecommendationsTv(tId);
+      /// assert
+      verify(mockMovieRemoteDataSource.getTvRecommendations(tId));
+      /* workaround to test List in Right. Issue: https://github.com/spebbe/dartz/issues/80 */
+      final resultList = result.getOrElse(() => []);
+      expect(resultList, equals(tMovieList));
+    });
+
+
+  });
 
   group('Popular Tv Series', (){
     test('should return tv list when call to data source is success', () async{
