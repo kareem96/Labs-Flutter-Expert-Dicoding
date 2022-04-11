@@ -56,6 +56,9 @@ dependencies:
   core:
     path: core
 
+  search:
+    path: search
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
