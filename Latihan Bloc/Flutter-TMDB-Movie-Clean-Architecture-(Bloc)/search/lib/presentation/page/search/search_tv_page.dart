@@ -28,7 +28,7 @@ class _SearchTvPageState extends State<SearchTvPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
-              onSubmitted: (query){
+              onChanged: (query){
                 Provider.of<TvSearchNotifier>(context, listen: false).fetchTvSearch(query);
               },
               decoration: const InputDecoration(

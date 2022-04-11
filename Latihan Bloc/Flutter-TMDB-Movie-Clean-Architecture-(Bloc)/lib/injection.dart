@@ -38,6 +38,7 @@ import 'package:core/presentation/provider/tv/tv_on_the_air_notifier.dart';
 import 'package:core/presentation/provider/tv/tv_popular_notifier.dart';
 import 'package:core/presentation/provider/tv/watchlist_tv_notifier.dart';
 import 'package:core/presentation/provider/watchlist_movie_notifier.dart';
+import 'package:search/presentation/bloc/search_bloc.dart';
 import 'package:search/use_case/search_movies.dart';
 import 'package:search/use_case/search_tv.dart';
 import 'package:search/presentation/provider/movie_search_notifier.dart';
@@ -85,7 +86,8 @@ void init() {
       ));
 
   ///
-  locator.registerFactory(() => MovieSearchNotifier(searchMovies: locator()));
+  /*locator.registerFactory(() => MovieSearchNotifier(searchMovies: locator()));*/
+  locator.registerFactory(() => SearchBloc(locator()));
   locator.registerFactory(() => TvSearchNotifier(searchTv: locator()));
 
   //

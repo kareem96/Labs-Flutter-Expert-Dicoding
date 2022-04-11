@@ -26,7 +26,9 @@ import 'package:core/styles/colors.dart';
 import 'package:core/styles/text_style.dart';
 import 'package:core/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:search/presentation/bloc/search_bloc.dart';
 import 'package:search/presentation/page/search/search_page.dart';
 import 'package:search/presentation/page/search/search_tv_page.dart';
 import 'package:search/presentation/provider/movie_search_notifier.dart';
@@ -55,8 +57,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => di.locator<TvDetailNotifier>(),
         ),
-        ChangeNotifierProvider(
+        /*ChangeNotifierProvider(
           create: (_) => di.locator<MovieSearchNotifier>(),
+        ),*/
+        BlocProvider(
+          create: (_) => di.locator<SearchBloc>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TvSearchNotifier>(),
