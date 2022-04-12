@@ -10,6 +10,7 @@ import 'package:core/styles/text_style.dart';
 import 'package:core/utils/state_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:movie/presentation/bloc/detail/movie_detail_bloc.dart';
 import 'package:provider/provider.dart';
 import '../../provider/movie_detail_notifier.dart';
 
@@ -27,7 +28,8 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
   void initState() {
     super.initState();
     Future.microtask(() {
-      Provider.of<MovieDetailNotifier>(context, listen: false).fetchMovieDetail(widget.id);
+      /*Provider.of<MovieDetailNotifier>(context, listen: false).fetchMovieDetail(widget.id);*/
+      context.read<MovieDetailBloc>().add(OnMovieDetail(widget.id));
       Provider.of<MovieDetailNotifier>(context, listen: false).loadWatchlistStatus(widget.id);
     });
   }

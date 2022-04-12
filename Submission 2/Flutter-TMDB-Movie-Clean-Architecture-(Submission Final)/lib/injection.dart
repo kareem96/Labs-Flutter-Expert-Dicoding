@@ -18,6 +18,9 @@ import 'package:core/domain/usecase/tv/remove_watchlist_tv.dart';
 import 'package:core/domain/usecase/tv/save_watchlist_tv.dart';
 import 'package:core/presentation/provider/tv/watchlist_tv_notifier.dart';
 import 'package:core/presentation/provider/watchlist_movie_notifier.dart';
+import 'package:movie/presentation/bloc/now_playing/movie_now_playing_bloc.dart';
+import 'package:movie/presentation/bloc/popular/movie_popular_bloc.dart';
+import 'package:movie/presentation/bloc/top_rated/movie_top_rated_bloc.dart';
 import 'package:movie/presentation/provider/movie_detail_notifier.dart';
 import 'package:movie/presentation/provider/movie_list_notifier.dart';
 import 'package:movie/presentation/provider/popular_movies_notifier.dart';
@@ -53,11 +56,16 @@ final locator = GetIt.instance;
 
 void init() {
   ///provider movies
-  locator.registerFactory(() => MovieListNotifier(
+  /*locator.registerFactory(() => MovieListNotifier(
         getNowPlayingMovies: locator(),
         getPopularMovies: locator(),
         getTopRatedMovies: locator(),
-      ));
+      ));*/
+
+  ///bloc movie
+  locator.registerFactory(() => MoviePopularBloc(locator()));
+  locator.registerFactory(() => MovieTopRatedBloc(locator()));
+  locator.registerFactory(() => MovieNowPlayingBloc(locator()));
 
   ///provider tv
   locator.registerFactory(() => TvListNotifier(
@@ -90,8 +98,9 @@ void init() {
   locator.registerFactory(() => TvSearchNotifier(searchTv: locator()));
 
   //
-  locator.registerFactory(() => PopularMoviesNotifier(locator()));
-  locator.registerFactory(() => TopRatedMoviesNotifier(getTopRatedMovies: locator()));
+  /*locator.registerFactory(() => PopularMoviesNotifier(locator()));*/
+  /*locator.registerFactory(() => TopRatedMoviesNotifier(getTopRatedMovies: locator()));*/
+
 
   ///
   locator.registerFactory(

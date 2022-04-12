@@ -1,9 +1,10 @@
 import 'package:core/presentation/widgets/card_list.dart';
 import 'package:core/utils/state_enum.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import '../../provider/top_rated_movies_notifier.dart';
 
+import '../../bloc/top_rated/movie_top_rated_bloc.dart';
 class TopRatedMoviesPage extends StatefulWidget {
   static const routeName = '/top_rated_movies_page';
 
@@ -20,8 +21,8 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
     // TODO: implement initState
     super.initState();
     Future.microtask(() =>
-        Provider.of<TopRatedMoviesNotifier>(context, listen: false)
-            .fetchTopRatedMovies());
+        BlocProvider.of<MovieTopRatedBloc>(context, listen: false).add(OnMovieTopRated()));
+        /*Provider.of<TopRatedMoviesNotifier>(context, listen: false).fetchTopRatedMovies());*/
   }
 
   @override
@@ -30,7 +31,26 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
       appBar: AppBar(title: const Text('Top Rated Movies'),),
       body: Padding(
         padding: const EdgeInsets.all(8),
-        child: Consumer<TopRatedMoviesNotifier>(
+        child: BlocBuilder<MovieTopRatedBloc, MovieTopRatedState>(
+          builder: (context, state) {
+            if(state is MovieTopRatedLoading){
+              return const CircularProgressIndicator();
+            }else if(state is MovieTopRatedHasData){
+              final data = state.result;
+              return ListView.builder(
+                  itemBuilder: (context, index) {
+                    final movie = data[index];
+                    return CardList(movie);
+                  }
+              );
+            }else{
+              return Center(
+                key: const Key("error_message"),
+                child: Text((state as MovieTopRatedError).message),
+              );
+            }
+          }),
+        /*child: Consumer<TopRatedMoviesNotifier>(
           builder: (context, provider, child) {
             if (provider.state == RequestState.Loading) {
               return const Center(child: CircularProgressIndicator(),);
@@ -49,7 +69,7 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
               );
             }
           },
-        ),
+        ),*/
       ),
     );
   }

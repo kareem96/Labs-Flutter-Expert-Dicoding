@@ -10,6 +10,9 @@ import 'package:core/utils/utils.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie/presentation/bloc/now_playing/movie_now_playing_bloc.dart';
+import 'package:movie/presentation/bloc/popular/movie_popular_bloc.dart';
+import 'package:movie/presentation/bloc/top_rated/movie_top_rated_bloc.dart';
 import 'package:movie/presentation/pages/movies/home_page.dart';
 import 'package:movie/presentation/pages/movies/movie_detail_page.dart';
 import 'package:movie/presentation/pages/movies/popular_movies_page.dart';
@@ -47,12 +50,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
+        /*ChangeNotifierProvider(
           create: (_) => di.locator<MovieListNotifier>(),
-        ),
-        ChangeNotifierProvider(
+        ),*/
+        /*ChangeNotifierProvider(
           create: (_) => di.locator<PopularMoviesNotifier>(),
-        ),
+        ),*/
         ChangeNotifierProvider(
           create: (_) => di.locator<MovieDetailNotifier>(),
         ),
@@ -65,6 +68,15 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => di.locator<SearchBloc>(),
         ),
+        BlocProvider(
+          create: (_) => di.locator<MovieTopRatedBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<MoviePopularBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<MovieNowPlayingBloc>(),
+        ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TvSearchNotifier>(),
         ),
@@ -74,9 +86,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => di.locator<WatchlistTvNotifier>(),
         ),
-        ChangeNotifierProvider(
+        /*ChangeNotifierProvider(
           create: (_) => di.locator<TopRatedMoviesNotifier>(),
-        ),
+        ),*/
+
         ChangeNotifierProvider(
           create: (_) => di.locator<TvListNotifier>(),
         ),
