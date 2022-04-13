@@ -1,12 +1,11 @@
 
 
 
-import 'package:core/presentation/widgets/card_tv_list.dart';
-import 'package:core/utils/state_enum.dart';
+import 'package:core/widgets/card_tv_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-
-import '../../provider/tv_popular_notifier.dart';
+import 'package:tv/presentation/bloc/tv_popular/tv_popular_bloc.dart';
 
 class PopularTvPage extends StatefulWidget {
   static const routeName = '/popular_tv_page';
@@ -22,7 +21,7 @@ class _PopularTvPageState extends State<PopularTvPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.microtask(() => Provider.of<TvPopularNotifier>(context, listen: false).fetchTvPopular());
+    Future.microtask(() => context.read<TvPopularBloc>().add(OnTvPopular()));
   }
   @override
   Widget build(BuildContext context) {
@@ -30,26 +29,27 @@ class _PopularTvPageState extends State<PopularTvPage> {
       appBar: AppBar(title: const Text('Tv Popular'),),
       body: Padding(
         padding: const EdgeInsets.all(8),
-        child: Consumer<TvPopularNotifier>(
-          builder: (context, provider, child){
-            if(provider.state == RequestState.Loading){
+        child: BlocBuilder<TvPopularBloc, TvPopularState>(
+          builder: (context, state) {
+            if(state is TvPopularLoading){
               return const Center(child: CircularProgressIndicator(),);
-            }else if(provider.state == RequestState.Loaded){
+            }else if(state is TvPopularHasData){
+              final popular = state.result;
               return ListView.builder(
-                itemCount: provider.popularTv.length,
+                itemCount: state.result.length,
                 itemBuilder: (context, index){
-                  final popularTv = provider.popularTv[index];
-                  return CardTvList(popularTv);
+                  final tvPopular = popular[index];
+                  return CardTvList(tvPopular);
                 },
               );
             }else{
               return Center(
-                key: const Key('error_message'),
-                child: Text(provider.message),
+                key: const Key("error_message"),
+                child: Text((state as TvPopularError).message),
               );
             }
-          },
-        ),
+          }),
+
       ),
     );
   }

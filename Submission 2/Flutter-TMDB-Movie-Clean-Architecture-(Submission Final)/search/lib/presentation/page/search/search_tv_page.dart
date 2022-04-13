@@ -1,9 +1,7 @@
 
-
-
-import 'package:core/presentation/widgets/card_tv_list.dart';
 import 'package:core/styles/text_style.dart';
 import 'package:core/utils/state_enum.dart';
+import 'package:core/widgets/card_tv_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,8 +1,8 @@
 
 
 
-import 'package:core/presentation/pages/watchlist/watchlist_page.dart';
-import 'package:core/presentation/pages/watchlist/watchlist_tv_page.dart';
+import 'package:movie/presentation/pages/movies/watchlist_page.dart';
+import 'package:tv/presentation/pages/tv/watchlist_tv_page.dart';
 import 'package:flutter/material.dart';
 
 class TabPager extends StatefulWidget {

@@ -1,13 +1,9 @@
-import 'package:core/presentation/widgets/card_list.dart';
-import 'package:core/utils/state_enum.dart';
+import 'package:core/widgets/card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
-
 import '../../bloc/top_rated/movie_top_rated_bloc.dart';
 class TopRatedMoviesPage extends StatefulWidget {
   static const routeName = '/top_rated_movies_page';
-
   const TopRatedMoviesPage({Key? key}) : super(key: key);
 
   @override
@@ -22,7 +18,6 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
     super.initState();
     Future.microtask(() =>
         BlocProvider.of<MovieTopRatedBloc>(context, listen: false).add(OnMovieTopRated()));
-        /*Provider.of<TopRatedMoviesNotifier>(context, listen: false).fetchTopRatedMovies());*/
   }
 
   @override
@@ -50,26 +45,6 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
               );
             }
           }),
-        /*child: Consumer<TopRatedMoviesNotifier>(
-          builder: (context, provider, child) {
-            if (provider.state == RequestState.Loading) {
-              return const Center(child: CircularProgressIndicator(),);
-            } else if (provider.state == RequestState.Loaded) {
-              return ListView.builder(
-                  itemCount:provider.movie.length,
-                  itemBuilder: (context, index){
-                    final movie = provider.movie[index];
-                    return CardList(movie);
-                  }
-              );
-            }else{
-              return Center(
-                key: const Key('error_message'),
-                child: Text(provider.message),
-              );
-            }
-          },
-        ),*/
       ),
     );
   }

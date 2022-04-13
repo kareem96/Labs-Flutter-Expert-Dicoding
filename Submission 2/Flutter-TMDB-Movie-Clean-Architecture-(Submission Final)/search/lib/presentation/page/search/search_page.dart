@@ -1,11 +1,9 @@
-import 'package:core/presentation/widgets/card_list.dart';
 import 'package:core/styles/text_style.dart';
+import 'package:core/widgets/card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:search/presentation/bloc/search_bloc.dart';
 import 'package:search/presentation/bloc/search_event.dart';
-
-import '../../provider/movie_search_notifier.dart';
 
 class SearchPage extends StatefulWidget {
   static const routeName = '/search';
@@ -32,9 +30,6 @@ class _SearchPageState extends State<SearchPage> {
               onChanged: (query){
                 context.read<SearchBloc>().add(OnQueryChanged(query));
               },
-              /*onSubmitted: (query) {
-                Provider.of<MovieSearchNotifier>(context, listen: false).fetchMovieSearch(query);
-              },*/
               decoration: const InputDecoration(
                 hintText: 'Search Movie',
                 prefixIcon: Icon(Icons.search_outlined),
@@ -74,26 +69,6 @@ class _SearchPageState extends State<SearchPage> {
                 return Expanded(child: Container());
               }
             })
-            /*Consumer<MovieSearchNotifier>(
-                builder: (context, data, child){
-                  if(data.state == RequestState.Loading){
-                    return const Center(child: CircularProgressIndicator(),);
-                  }else if(data.state == RequestState.Loaded){
-                    final result = data.searchResult;
-                    return Expanded(
-                      child: ListView.builder(
-                        itemCount: result.length,
-                        itemBuilder: (context, index){
-                          final movie = data.searchResult[index];
-                          return CardList(movie);
-                        },
-                      ),
-                    );
-                  }else{
-                    return Expanded(child: Container());
-                  }
-                }
-            )*/
           ],
         ),
       ),
