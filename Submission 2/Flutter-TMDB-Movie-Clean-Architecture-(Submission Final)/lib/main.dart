@@ -26,6 +26,7 @@ import 'package:tv/presentation/bloc/tv_airing_today/tv_airing_today_bloc.dart';
 import 'package:tv/presentation/bloc/tv_detail/tv_detail_bloc.dart';
 import 'package:tv/presentation/bloc/tv_on_the_air/tv_on_the_air_bloc.dart';
 import 'package:tv/presentation/bloc/tv_popular/tv_popular_bloc.dart';
+import 'package:tv/presentation/bloc/tv_recommendation/tv_recommendation_bloc.dart';
 import 'package:tv/presentation/bloc/tv_top_rated/tv_top_rated_bloc.dart';
 import 'package:tv/presentation/bloc/tv_watchlist/tv_watchlist_bloc.dart';
 import 'package:tv/presentation/pages/tv/airing_today_page.dart';
@@ -53,6 +54,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => di.locator<MovieRecommendationBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TvRecommendationBloc>(),
         ),
         BlocProvider(
           create: (_) => di.locator<TvDetailBloc>(),

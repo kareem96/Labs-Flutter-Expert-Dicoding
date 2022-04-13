@@ -44,24 +44,26 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
       }
       return false;
     });
-    return Scaffold(
-      body: BlocBuilder<MovieDetailBloc, MovieDetailState>(
-        builder: (context, state){
-          if(state is MovieDetailLoading){
-            return const Center(child: CircularProgressIndicator(),);
-          }else if(state is MovieDetailHasData){
-            final movie = state.result;
-            return ContentDetails(
-                movie: movie,
-                isAddedWatchlist: isMovieAddedToWatchList
-            );
-          }else{
-            return const Center(
-              child: Text("Failed"),
-            );
-          }
-        },
-      )
+    return SafeArea(
+      child: Scaffold(
+          body: BlocBuilder<MovieDetailBloc, MovieDetailState>(
+            builder: (context, state){
+              if(state is MovieDetailLoading){
+                return const Center(child: CircularProgressIndicator(),);
+              }else if(state is MovieDetailHasData){
+                final movie = state.result;
+                return ContentDetails(
+                    movie: movie,
+                    isAddedWatchlist: isMovieAddedToWatchList
+                );
+              }else{
+                return const Center(
+                  child: Text("Failed"),
+                );
+              }
+            },
+          )
+      ),
     );
   }
 }

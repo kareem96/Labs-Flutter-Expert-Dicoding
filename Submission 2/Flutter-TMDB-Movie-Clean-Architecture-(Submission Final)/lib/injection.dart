@@ -38,6 +38,7 @@ import 'package:tv/presentation/bloc/tv_airing_today/tv_airing_today_bloc.dart';
 import 'package:tv/presentation/bloc/tv_detail/tv_detail_bloc.dart';
 import 'package:tv/presentation/bloc/tv_on_the_air/tv_on_the_air_bloc.dart';
 import 'package:tv/presentation/bloc/tv_popular/tv_popular_bloc.dart';
+import 'package:tv/presentation/bloc/tv_recommendation/tv_recommendation_bloc.dart';
 import 'package:tv/presentation/bloc/tv_top_rated/tv_top_rated_bloc.dart';
 import 'package:tv/presentation/bloc/tv_watchlist/tv_watchlist_bloc.dart';
 import 'package:tv/usecase/get_recommendations_tv.dart';
@@ -64,6 +65,7 @@ void init() {
   locator.registerFactory(() => TvPopularBloc(locator()));
   locator.registerFactory(() => TvDetailBloc(locator(),));
   locator.registerFactory(() => TvTopRatedBloc(locator(),));
+  locator.registerFactory(() => TvRecommendationBloc(locator(),));
 
   ///search bloc
   locator.registerFactory(() => SearchBloc(locator()));
