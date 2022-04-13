@@ -100,7 +100,7 @@ void main(){
   });
 
   group('cache now playing movies', () {
-    test('should call database helper to save data', () async {
+    test('should call database helpers to save data', () async {
       ///arrange
       when(mockDatabaseHelper.clearCache('now playing'))
           .thenAnswer((_) async => 1);
