@@ -1,10 +1,8 @@
 import 'package:core/styles/text_style.dart';
-import 'package:core/utils/state_enum.dart';
 import 'package:core/widgets/card_tv_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../provider/tv_search_notifier.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:search/presentation/bloc/tv_bloc_search/tv_search_bloc.dart';
 
 class SearchTvPage extends StatefulWidget {
   static const routeName = '/search_tv';
@@ -29,8 +27,7 @@ class _SearchTvPageState extends State<SearchTvPage> {
           children: [
             TextField(
               onChanged: (query) {
-                Provider.of<TvSearchNotifier>(context, listen: false)
-                    .fetchTvSearch(query);
+                context.read<TvSearchBloc>().add(OnQueryTvChange(query));
               },
               decoration: const InputDecoration(
                 hintText: 'Search TV',
@@ -46,28 +43,34 @@ class _SearchTvPageState extends State<SearchTvPage> {
               'Search Result',
               style: Heading6,
             ),
-            Consumer<TvSearchNotifier>(
-              builder: (context, data, child) {
-                if (data.state == RequestState.Loading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (data.state == RequestState.Loaded) {
-                  final result = data.searchResultTv;
-                  return Expanded(
-                    child: ListView.builder(
-                      itemCount: result.length,
-                      itemBuilder: (context, index) {
-                        final movie = data.searchResultTv[index];
-                        return CardTvList(movie);
-                      },
-                    ),
-                  );
-                } else {
-                  return Expanded(child: Container());
-                }
-              },
-            )
+
+            BlocBuilder<TvSearchBloc, TvSearchState>(builder: (context, state) {
+              if (state is TvSearchLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state is TvSearchHasData) {
+                final result = state.result;
+                return Expanded(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(8),
+                    itemBuilder: (context, index) {
+                      final movie = result[index];
+                      return CardTvList(movie);
+                    },
+                    itemCount: result.length,
+                  ),
+                );
+              } else if (state is TvSearchError) {
+                return Expanded(
+                  child: Center(
+                    child: Text(state.message),
+                  ),
+                );
+              } else {
+                return Expanded(child: Container());
+              }
+            })
           ],
         ),
       ),

@@ -107,11 +107,11 @@ class _ContentDetailsState extends State<ContentDetails> {
 
               if (state is MovieWatchListIsAdded) {
                 final isAdded = state.isAdded;
-                message = isAdded == false ? "addMe" : "remove";
+                message = isAdded == false ? notifAdd : notifRemove;
               } else {
-                message = !widget.isAddedWatchlist ? "added" : "remove";
+                message = !widget.isAddedWatchlist ? notifAdd : notifRemove;
               }
-              if (message == "add" || message == "remove") {
+              if (message == notifAdd || message == notifRemove) {
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text(message)));
               } else {

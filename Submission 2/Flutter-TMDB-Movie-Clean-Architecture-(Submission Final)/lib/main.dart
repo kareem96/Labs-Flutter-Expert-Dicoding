@@ -20,9 +20,9 @@ import 'package:movie/presentation/pages/movies/top_rated_movies_page.dart';
 import 'package:movie/presentation/pages/movies/watchlist_page.dart';
 import 'package:provider/provider.dart';
 import 'package:search/presentation/bloc/search_bloc.dart';
+import 'package:search/presentation/bloc/tv_bloc_search/tv_search_bloc.dart';
 import 'package:search/presentation/page/search/search_page.dart';
 import 'package:search/presentation/page/search/search_tv_page.dart';
-import 'package:search/presentation/provider/tv_search_notifier.dart';
 import 'package:tv/presentation/bloc/tv_airing_today/tv_airing_today_bloc.dart';
 import 'package:tv/presentation/bloc/tv_detail/tv_detail_bloc.dart';
 import 'package:tv/presentation/bloc/tv_on_the_air/tv_on_the_air_bloc.dart';
@@ -65,6 +65,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => di.locator<SearchBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TvSearchBloc>(),
         ),
         BlocProvider(
           create: (_) => di.locator<MovieTopRatedBloc>(),

@@ -28,13 +28,12 @@ import 'package:movie/usecase/get_popular_movies.dart';
 import 'package:movie/usecase/get_recommended_movie.dart';
 import 'package:movie/usecase/get_top_rated_movies.dart';
 import 'package:search/presentation/bloc/search_bloc.dart';
+import 'package:search/presentation/bloc/tv_bloc_search/tv_search_bloc.dart';
 import 'package:search/use_case/search_movies.dart';
 import 'package:search/use_case/search_tv.dart';
-import 'package:search/presentation/provider/tv_search_notifier.dart';
 import 'package:core/utils/network_info.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
 import 'package:tv/presentation/bloc/tv_airing_today/tv_airing_today_bloc.dart';
 import 'package:tv/presentation/bloc/tv_detail/tv_detail_bloc.dart';
 import 'package:tv/presentation/bloc/tv_on_the_air/tv_on_the_air_bloc.dart';
@@ -70,7 +69,7 @@ void init() {
 
   ///search bloc
   locator.registerFactory(() => SearchBloc(locator()));
-  locator.registerFactory(() => TvSearchNotifier(searchTv: locator()));
+  locator.registerFactory(() => TvSearchBloc(locator()));
 
   ///watchlist bloc
   locator.registerFactory(() => MovieWatchListBloc(
@@ -148,9 +147,8 @@ void init() {
   locator.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(locator()));
 
   ///external
-  locator.registerLazySingleton(() => http.Client());
+  // locator.registerLazySingleton(() => http.Client());
   locator.registerLazySingleton(() => DataConnectionChecker());
-
   locator.registerLazySingleton(() => HttpSSLPinning.client);
 
 }

@@ -100,13 +100,13 @@ class _ContentDetailsState extends State<ContentDetails> {
 
               if (state is TvWatchListIsAdded) {
                 final isAdded = state.isAdded;
-                message = isAdded == false ? "addMessage" : "removeMessage";
+                message = isAdded == false ? notifAdd : notifRemove;
               } else {
                 message =
-                    !widget.isAddedWatchlistTv ? "addMessage" : "removeMessage";
+                    !widget.isAddedWatchlistTv ? notifAdd : notifRemove;
               }
 
-              if (message == "addMessage" || message == "removeMessage") {
+              if (message == notifAdd || message == notifRemove) {
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text(message)));
               } else {
