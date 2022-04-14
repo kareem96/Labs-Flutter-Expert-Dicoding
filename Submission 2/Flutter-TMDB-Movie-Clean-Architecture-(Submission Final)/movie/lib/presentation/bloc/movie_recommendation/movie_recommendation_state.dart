@@ -1,24 +1,21 @@
-
-
-
 part of "movie_recommendation_bloc.dart";
 
 @immutable
-abstract class MovieRecommendationState extends Equatable{}
+abstract class MovieRecommendationState extends Equatable {}
 
-class MovieRecommendationEmpty extends MovieRecommendationState{
+class MovieRecommendationEmpty extends MovieRecommendationState {
   @override
   // TODO: implement props
   List<Object?> get props => [];
 }
 
-class MovieRecommendationLoading extends MovieRecommendationState{
+class MovieRecommendationLoading extends MovieRecommendationState {
   @override
   // TODO: implement props
   List<Object?> get props => [];
 }
 
-class MovieRecommendationError extends MovieRecommendationState{
+class MovieRecommendationError extends MovieRecommendationState {
   final String message;
 
   MovieRecommendationError(this.message);
@@ -28,7 +25,7 @@ class MovieRecommendationError extends MovieRecommendationState{
   List<Object?> get props => [message];
 }
 
-class MovieRecommendationHasData extends MovieRecommendationState{
+class MovieRecommendationHasData extends MovieRecommendationState {
   final List<Movie> result;
 
   MovieRecommendationHasData(this.result);

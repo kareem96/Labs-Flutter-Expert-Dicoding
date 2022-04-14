@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 
 import 'package:core/domain/entities/movie_detail.dart';
@@ -8,18 +6,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie/usecase/get_detail_movie.dart';
 
 part 'movie_detail_event.dart';
+
 part 'movie_detail_state.dart';
 
-class MovieDetailBloc extends Bloc<MovieDetailEvent,  MovieDetailState>{
+class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
   final GetMovieDetail _getMovieDetail;
 
-  MovieDetailBloc(this._getMovieDetail) : super(MovieDetailEmpty()){
+  MovieDetailBloc(this._getMovieDetail) : super(MovieDetailEmpty()) {
     on<OnMovieDetail>(_onMovieDetail);
   }
 
-
-
-  FutureOr<void> _onMovieDetail(OnMovieDetail event, Emitter<MovieDetailState> emit) async{
+  FutureOr<void> _onMovieDetail(
+      OnMovieDetail event, Emitter<MovieDetailState> emit) async {
     final id = event.id;
 
     emit(MovieDetailLoading());

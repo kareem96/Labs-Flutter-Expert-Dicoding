@@ -1,6 +1,3 @@
-
-
-
 import 'package:core/domain/entities/movie.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,15 +7,15 @@ import 'package:search/use_case/search_movies.dart';
 
 part 'search_state.dart';
 
-EventTransformer<T> debounce<T>(Duration duration){
+EventTransformer<T> debounce<T>(Duration duration) {
   return (events, mapper) => events.debounceTime(duration).flatMap(mapper);
 }
 
-class SearchBloc extends Bloc<SearchEvent, SearchState>{
+class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final SearchMovies _searchMovie;
 
-  SearchBloc(this._searchMovie) : super(SearchEmpty()){
-    on<OnQueryChanged>((event, emit) async{
+  SearchBloc(this._searchMovie) : super(SearchEmpty()) {
+    on<OnQueryChanged>((event, emit) async {
       final query = event.query;
       print(query);
 
@@ -31,5 +28,4 @@ class SearchBloc extends Bloc<SearchEvent, SearchState>{
       });
     }, transformer: debounce(const Duration(milliseconds: 500)));
   }
-
 }

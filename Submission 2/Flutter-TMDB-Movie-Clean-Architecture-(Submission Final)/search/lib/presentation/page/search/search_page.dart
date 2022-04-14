@@ -27,7 +27,7 @@ class _SearchPageState extends State<SearchPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
-              onChanged: (query){
+              onChanged: (query) {
                 context.read<SearchBloc>().add(OnQueryChanged(query));
               },
               decoration: const InputDecoration(
@@ -52,20 +52,22 @@ class _SearchPageState extends State<SearchPage> {
               } else if (state is SearchHasData) {
                 final result = state.result;
                 return Expanded(
-                    child: ListView.builder(
-                        padding: const EdgeInsets.all(8),
-                        itemBuilder: (context, index) {
-                          final movie = result[index];
-                          return CardList(movie);
-                        },
-                      itemCount: result.length,
-                    ),
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(8),
+                    itemBuilder: (context, index) {
+                      final movie = result[index];
+                      return CardList(movie);
+                    },
+                    itemCount: result.length,
+                  ),
                 );
-              }else if(state is SearchError){
+              } else if (state is SearchError) {
                 return Expanded(
-                  child: Center(child: Text(state.message),),
+                  child: Center(
+                    child: Text(state.message),
+                  ),
                 );
-              }else{
+              } else {
                 return Expanded(child: Container());
               }
             })

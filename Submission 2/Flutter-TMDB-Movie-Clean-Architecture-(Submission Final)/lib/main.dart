@@ -1,6 +1,7 @@
 import 'package:about/about.dart';
 import 'package:core/styles/colors.dart';
 import 'package:core/styles/text_style.dart';
+import 'package:core/utils/ssl_pinning/http_ssl_pinning.dart';
 import 'package:core/utils/utils.dart';
 import 'package:core/widgets/tab_pager.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -40,6 +41,7 @@ import 'injection.dart' as di;
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await HttpSSLPinning.init();
   di.init();
   runApp(MyApp());
 }

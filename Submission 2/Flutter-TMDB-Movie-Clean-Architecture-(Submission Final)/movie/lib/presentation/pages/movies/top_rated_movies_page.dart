@@ -2,8 +2,10 @@ import 'package:core/widgets/card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/top_rated/movie_top_rated_bloc.dart';
+
 class TopRatedMoviesPage extends StatefulWidget {
   static const routeName = '/top_rated_movies_page';
+
   const TopRatedMoviesPage({Key? key}) : super(key: key);
 
   @override
@@ -11,19 +13,21 @@ class TopRatedMoviesPage extends StatefulWidget {
 }
 
 class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     Future.microtask(() =>
-        BlocProvider.of<MovieTopRatedBloc>(context, listen: false).add(OnMovieTopRated()));
+        BlocProvider.of<MovieTopRatedBloc>(context, listen: false)
+            .add(OnMovieTopRated()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Top Rated Movies'),),
+      appBar: AppBar(
+        title: const Text('Top Rated Movies'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: BlocBuilder<MovieTopRatedBloc, MovieTopRatedState>(
@@ -50,7 +54,8 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
               );
             }
           },
-        ),      ),
+        ),
+      ),
     );
   }
 }

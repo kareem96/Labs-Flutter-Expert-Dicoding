@@ -9,23 +9,28 @@ part 'tv_recommendation_event.dart';
 
 part 'tv_recommendation_state.dart';
 
-class TvRecommendationBloc extends Bloc<TvRecommendationEvent, TvRecommendationState>{
+class TvRecommendationBloc
+    extends Bloc<TvRecommendationEvent, TvRecommendationState> {
   final GetRecommendationsTv _getRecommendationsTv;
-  TvRecommendationBloc(this._getRecommendationsTv) : super(TvRecommendationEmpty()){
+
+  TvRecommendationBloc(this._getRecommendationsTv)
+      : super(TvRecommendationEmpty()) {
     on<OnTvRecommendation>(_onTvRecommendation);
   }
 
-
-  FutureOr<void> _onTvRecommendation(OnTvRecommendation event, Emitter<TvRecommendationState> emit) async{
+  FutureOr<void> _onTvRecommendation(
+      OnTvRecommendation event, Emitter<TvRecommendationState> emit) async {
     final id = event.id;
 
     emit(TvRecommendationLoading());
     final result = await _getRecommendationsTv.execute(id);
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(TvRecommendationError(failure.message));
     }, (success) {
-      success.isEmpty ? emit(TvRecommendationEmpty()) : emit(TvRecommendationHasData(success));
+      success.isEmpty
+          ? emit(TvRecommendationEmpty())
+          : emit(TvRecommendationHasData(success));
     });
   }
 }

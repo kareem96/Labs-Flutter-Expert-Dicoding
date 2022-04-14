@@ -9,22 +9,24 @@ part 'tv_popular_event.dart';
 
 part 'tv_popular_state.dart';
 
-
-class TvPopularBloc extends Bloc<TvPopularEvent, TvPopularState>{
+class TvPopularBloc extends Bloc<TvPopularEvent, TvPopularState> {
   final GetTvPopular _getTvPopular;
 
-  TvPopularBloc(this._getTvPopular) : super(TvPopularEmpty()){
+  TvPopularBloc(this._getTvPopular) : super(TvPopularEmpty()) {
     on<OnTvPopular>(_onTvPopular);
   }
 
-  FutureOr<void> _onTvPopular(OnTvPopular event, Emitter<TvPopularState> emit) async{
+  FutureOr<void> _onTvPopular(
+      OnTvPopular event, Emitter<TvPopularState> emit) async {
     emit(TvPopularLoading());
     final result = await _getTvPopular.execute();
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(TvPopularError(failure.message));
-    }, (success){
-      success.isEmpty ? emit(TvPopularEmpty()) : emit(TvPopularHasData(success));
+    }, (success) {
+      success.isEmpty
+          ? emit(TvPopularEmpty())
+          : emit(TvPopularHasData(success));
     });
   }
 }

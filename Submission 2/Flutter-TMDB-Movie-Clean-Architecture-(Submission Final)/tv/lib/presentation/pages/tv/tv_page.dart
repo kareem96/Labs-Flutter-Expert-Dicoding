@@ -7,7 +7,6 @@ import 'package:core/widgets/tab_pager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie/presentation/pages/movies/home_page.dart';
-import 'package:provider/provider.dart';
 import 'package:search/presentation/page/search/search_tv_page.dart';
 import 'package:tv/presentation/bloc/tv_airing_today/tv_airing_today_bloc.dart';
 import 'package:tv/presentation/bloc/tv_on_the_air/tv_on_the_air_bloc.dart';
@@ -104,32 +103,33 @@ class _TvPageState extends State<TvPage> {
               ),
               BlocBuilder<TvTopRatedBloc, TvTopRatedState>(
                   builder: (context, state) {
-                    if(state is TvTopRatedLoading){
-                      return const Center(child: CircularProgressIndicator(),);
-                    }else if(state is TvTopRatedHasData){
-                      return TvList(state.result);
-                    }else{
-                      return const Text("Failed");
-                    }
-                  }
-              ),
-
+                if (state is TvTopRatedLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is TvTopRatedHasData) {
+                  return TvList(state.result);
+                } else {
+                  return const Text("Failed");
+                }
+              }),
               _buildSubHeading(
                   title: 'Tv Popular',
                   onTap: () {
                     Navigator.pushNamed(context, PopularTvPage.routeName);
                   }),
               BlocBuilder<TvPopularBloc, TvPopularState>(
-                  builder: (context, state){
-                    if(state is TvPopularLoading){
-                      return const Center(child: CircularProgressIndicator(),);
-                    }else if(state is TvPopularHasData){
-                      return TvList(state.result);
-                    }else{
-                      return const Text("Failed");
-                    }
-                  }
-              ),
+                  builder: (context, state) {
+                if (state is TvPopularLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is TvPopularHasData) {
+                  return TvList(state.result);
+                } else {
+                  return const Text("Failed");
+                }
+              }),
               _buildSubHeading(
                   title: 'Tv On The Air',
                   onTap: () {
@@ -137,16 +137,16 @@ class _TvPageState extends State<TvPage> {
                   }),
               BlocBuilder<TvOnTheAirBloc, TvOnTheAirState>(
                   builder: (context, state) {
-                    if(state is TvOnTheAirLoading){
-                      return const Center(child: CircularProgressIndicator(),);
-                    }else if(state is TvOnTheAirHasData){
-                      return TvList(state.result);
-                    }else{
-                      return const Text("Failed");
-                    }
-                  }
-              ),
-
+                if (state is TvOnTheAirLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is TvOnTheAirHasData) {
+                  return TvList(state.result);
+                } else {
+                  return const Text("Failed");
+                }
+              }),
               _buildSubHeading(
                   title: 'Tv Airing Today',
                   onTap: () {
@@ -154,15 +154,16 @@ class _TvPageState extends State<TvPage> {
                   }),
               BlocBuilder<TvAiringTodayBloc, TvAiringTodayState>(
                   builder: (context, state) {
-                    if(state is TvAiringTodayLoading){
-                      return const Center(child: CircularProgressIndicator(),);
-                    }else if(state is TvAiringTodayHasData){
-                      return TvList(state.result);
-                    }else{
-                      return const Text("Failed");
-                    }
-                  }
-              ),
+                if (state is TvAiringTodayLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is TvAiringTodayHasData) {
+                  return TvList(state.result);
+                } else {
+                  return const Text("Failed");
+                }
+              }),
             ],
           ),
         ),

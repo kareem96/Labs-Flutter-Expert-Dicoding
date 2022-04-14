@@ -1,6 +1,3 @@
-
-
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/domain/entities/genre.dart';
 import 'package:core/domain/entities/movie_detail.dart';
@@ -19,6 +16,7 @@ import '../../bloc/movie_watchlist/movie_watchlist_bloc.dart';
 class MovieDetailPage extends StatefulWidget {
   static const routeName = '/detail';
   final int id;
+
   const MovieDetailPage({Key? key, required this.id}) : super(key: key);
 
   @override
@@ -31,39 +29,40 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
     super.initState();
     Future.microtask(() {
       context.read<MovieDetailBloc>().add(OnMovieDetail(widget.id));
-      context.read<MovieRecommendationBloc>().add(OnMovieRecommendation(widget.id));
+      context
+          .read<MovieRecommendationBloc>()
+          .add(OnMovieRecommendation(widget.id));
       context.read<MovieWatchListBloc>().add(MovieWatchListStatus(widget.id));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final isMovieAddedToWatchList = context.select<MovieWatchListBloc, bool>((bloc){
-      if(bloc.state is MovieWatchListIsAdded){
+    final isMovieAddedToWatchList =
+        context.select<MovieWatchListBloc, bool>((bloc) {
+      if (bloc.state is MovieWatchListIsAdded) {
         return (bloc.state as MovieWatchListIsAdded).isAdded;
       }
       return false;
     });
     return SafeArea(
-      child: Scaffold(
-          body: BlocBuilder<MovieDetailBloc, MovieDetailState>(
-            builder: (context, state){
-              if(state is MovieDetailLoading){
-                return const Center(child: CircularProgressIndicator(),);
-              }else if(state is MovieDetailHasData){
-                final movie = state.result;
-                return ContentDetails(
-                    movie: movie,
-                    isAddedWatchlist: isMovieAddedToWatchList
-                );
-              }else{
-                return const Center(
-                  child: Text("Failed"),
-                );
-              }
-            },
-          )
-      ),
+      child: Scaffold(body: BlocBuilder<MovieDetailBloc, MovieDetailState>(
+        builder: (context, state) {
+          if (state is MovieDetailLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is MovieDetailHasData) {
+            final movie = state.result;
+            return ContentDetails(
+                movie: movie, isAddedWatchlist: isMovieAddedToWatchList);
+          } else {
+            return const Center(
+              child: Text("Failed"),
+            );
+          }
+        },
+      )),
     );
   }
 }
@@ -71,10 +70,12 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 class ContentDetails extends StatefulWidget {
   final MovieDetail movie;
   bool isAddedWatchlist;
+
   ContentDetails({
+    Key? key,
     required this.movie,
     required this.isAddedWatchlist,
-  });
+  }) : super(key: key);
 
   @override
   State<ContentDetails> createState() => _ContentDetailsState();
@@ -91,27 +92,36 @@ class _ContentDetailsState extends State<ContentDetails> {
           style: Heading5,
         ),
         ElevatedButton(
-            onPressed: () async{
-              if(!widget.isAddedWatchlist){
-                context.read<MovieWatchListBloc>().add(MovieWatchListAdd(widget.movie));
-              }else{
-                context.read<MovieWatchListBloc>().add(MovieWatchListRemove(widget.movie));
+            onPressed: () async {
+              if (!widget.isAddedWatchlist) {
+                context
+                    .read<MovieWatchListBloc>()
+                    .add(MovieWatchListAdd(widget.movie));
+              } else {
+                context
+                    .read<MovieWatchListBloc>()
+                    .add(MovieWatchListRemove(widget.movie));
               }
               final state = BlocProvider.of<MovieWatchListBloc>(context).state;
               String message = "";
 
-              if(state is MovieWatchListIsAdded){
+              if (state is MovieWatchListIsAdded) {
                 final isAdded = state.isAdded;
                 message = isAdded == false ? "addMe" : "remove";
-              }else{
+              } else {
                 message = !widget.isAddedWatchlist ? "added" : "remove";
               }
-              if(message == "add" || message == "remove"){
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
-              }else{
-                showDialog(context: context, builder: (context){
-                  return AlertDialog(content: Text(message),);
-                });
+              if (message == "add" || message == "remove") {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(message)));
+              } else {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        content: Text(message),
+                      );
+                    });
               }
               setState(() {
                 widget.isAddedWatchlist = !widget.isAddedWatchlist;
@@ -120,111 +130,127 @@ class _ContentDetailsState extends State<ContentDetails> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                widget.isAddedWatchlist ? const Icon(Icons.check) : const Icon(Icons.add),
-                const SizedBox(width: 6,),
+                widget.isAddedWatchlist
+                    ? const Icon(Icons.check)
+                    : const Icon(Icons.add),
+                const SizedBox(
+                  width: 6,
+                ),
                 const Text("Watchlist"),
-                const SizedBox(width: 6,),
+                const SizedBox(
+                  width: 6,
+                ),
               ],
-            )
-        ),
+            )),
         Text(_showGenres(widget.movie.genres)),
         Text(_showDuration(widget.movie.runtime!)),
         Row(
           children: [
             RatingBarIndicator(
               rating: widget.movie.voteAverage / 2,
-                itemCount: 5,
-                itemBuilder: (context, index) => const Icon(
-                  Icons.star,
-                  color: kYellow,
-                ),
+              itemCount: 5,
+              itemBuilder: (context, index) => const Icon(
+                Icons.star,
+                color: kYellow,
+              ),
               itemSize: 24,
             ),
             Text("${widget.movie.voteAverage}")
           ],
         ),
-        const SizedBox(height: 16,),
+        const SizedBox(
+          height: 16,
+        ),
         Text(
           'Overview',
           style: Heading6,
         ),
         Text(widget.movie.overview.isNotEmpty ? widget.movie.overview : "-"),
-        const SizedBox(height: 16,),
+        const SizedBox(
+          height: 16,
+        ),
         Text(
           'Recommendations',
           style: Heading6,
         ),
         BlocBuilder<MovieRecommendationBloc, MovieRecommendationState>(
             builder: (context, state) {
-              if(state is MovieRecommendationLoading){
-                return const Center(child: CircularProgressIndicator(),);
-              }else if(state is MovieRecommendationHasData){
-                final movieRecommendation = state.result;
-                print("berhasil");
-                return Container(
-                  margin: const EdgeInsets.only(top: 8),
-                  height: 100,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index){
-                      final recommendation = movieRecommendation[index];
-                      return Padding(
-                        padding: const EdgeInsets.all(4),
-                        child: InkWell(
-                          onTap: (){
-                            Navigator.pushReplacementNamed(context, MovieDetailPage.routeName, arguments: recommendation);
-                          },
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.all(Radius.circular(8)),
-                            child: CachedNetworkImage(
-                              imageUrl: "$BASE_IMAGE_URL${recommendation.posterPath}",
-                              placeholder: (context, url) => const Padding(
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 12
-                                ),
-                                child: Center(child: CircularProgressIndicator(),),
-                              ),
-                              errorWidget: (context, url, error)=>
-                                const Icon(Icons.error),
+          if (state is MovieRecommendationLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is MovieRecommendationHasData) {
+            final movieRecommendation = state.result;
+            print("berhasil");
+            return Container(
+              margin: const EdgeInsets.only(top: 8),
+              height: 100,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  final recommendation = movieRecommendation[index];
+                  return Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushReplacementNamed(
+                            context, MovieDetailPage.routeName,
+                            arguments: recommendation);
+                      },
+                      child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8)),
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              "$BASE_IMAGE_URL${recommendation.posterPath}",
+                          placeholder: (context, url) => const Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 12),
+                            child: Center(
+                              child: CircularProgressIndicator(),
                             ),
                           ),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
                         ),
-                      );
-                    },
-                    itemCount: movieRecommendation.length,
-                  ),
-                );
-              }else if(state is MovieRecommendationEmpty){
-                return const Text("-");
-              }else{
-                return const Text("Failed");
-              }
-            }
-        ),
-        const SizedBox(height: 16,)
+                      ),
+                    ),
+                  );
+                },
+                itemCount: movieRecommendation.length,
+              ),
+            );
+          } else if (state is MovieRecommendationEmpty) {
+            return const Text("-");
+          } else {
+            return const Text("Failed");
+          }
+        }),
+        const SizedBox(
+          height: 16,
+        )
       ],
     );
-
-
   }
-  String _showGenres(List<Genre> genres){
+
+  String _showGenres(List<Genre> genres) {
     String result = '';
-    for (var genre in genres){
+    for (var genre in genres) {
       result += genre.name + ', ';
     }
-    if(result.isEmpty){
+    if (result.isEmpty) {
       return result;
     }
     return result.substring(0, result.length - 2);
   }
-  String _showDuration(int runtime){
+
+  String _showDuration(int runtime) {
     final int hours = runtime ~/ 60;
     final int minutes = runtime % 60;
-    if(hours > 0){
+    if (hours > 0) {
       return '${hours}h ${minutes}m';
-    }else{
+    } else {
       return '${minutes}m';
     }
   }
 }
-

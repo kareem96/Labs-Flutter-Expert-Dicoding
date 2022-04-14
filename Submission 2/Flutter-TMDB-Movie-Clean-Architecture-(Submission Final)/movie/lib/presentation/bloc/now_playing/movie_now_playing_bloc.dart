@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 
 import 'package:core/domain/entities/movie.dart';
@@ -8,19 +6,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../usecase/get_now_playing_movies.dart';
 
-
 part 'movie_now_playing_state.dart';
+
 part 'movie_now_playing_event.dart';
 
-class MovieNowPlayingBloc extends Bloc<MovieNowPlayingEvent, MovieNowPlayingState>{
+class MovieNowPlayingBloc
+    extends Bloc<MovieNowPlayingEvent, MovieNowPlayingState> {
   final GetNowPlayingMovies _getNowPlayingMovies;
 
-  MovieNowPlayingBloc(this._getNowPlayingMovies,) : super(MovieNowPlayingEmpty()){
+  MovieNowPlayingBloc(
+    this._getNowPlayingMovies,
+  ) : super(MovieNowPlayingEmpty()) {
     on<OnMovieNowPLayingCalled>(_onMovieNowPlayingCalled);
   }
 
-
-  FutureOr<void> _onMovieNowPlayingCalled(OnMovieNowPLayingCalled event, Emitter<MovieNowPlayingState> emit) async {
+  FutureOr<void> _onMovieNowPlayingCalled(
+      OnMovieNowPLayingCalled event, Emitter<MovieNowPlayingState> emit) async {
     emit(MovieNowPlayingLoading());
 
     final result = await _getNowPlayingMovies.execute();
@@ -28,7 +29,9 @@ class MovieNowPlayingBloc extends Bloc<MovieNowPlayingEvent, MovieNowPlayingStat
     result.fold((failure) {
       emit(MovieNowPlayingError(failure.message));
     }, (success) {
-      success.isEmpty ? emit(MovieNowPlayingEmpty()) : emit(MovieNowPlayingHasData(success));
+      success.isEmpty
+          ? emit(MovieNowPlayingEmpty())
+          : emit(MovieNowPlayingHasData(success));
     });
   }
 }

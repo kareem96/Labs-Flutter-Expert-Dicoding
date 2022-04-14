@@ -9,22 +9,24 @@ part 'tv_top_rated_event.dart';
 
 part 'tv_top_rated_state.dart';
 
-
-class TvTopRatedBloc extends Bloc<TvTopRatedEvent, TvTopRatedState>{
+class TvTopRatedBloc extends Bloc<TvTopRatedEvent, TvTopRatedState> {
   final GetTvTopRated _getTvTopRated;
-  TvTopRatedBloc(this._getTvTopRated) : super(TvTopRatedEmpty()){
+
+  TvTopRatedBloc(this._getTvTopRated) : super(TvTopRatedEmpty()) {
     on<OnTvTopRated>(_onTvTopRated);
   }
 
-
-  FutureOr<void> _onTvTopRated(OnTvTopRated event, Emitter<TvTopRatedState> emit) async{
+  FutureOr<void> _onTvTopRated(
+      OnTvTopRated event, Emitter<TvTopRatedState> emit) async {
     emit(TvTopRatedLoading());
     final result = await _getTvTopRated.execute();
 
-    result.fold((failure){
+    result.fold((failure) {
       emit(TvTopRatedError(failure.message));
-    }, (success){
-      success.isEmpty ? emit(TvTopRatedEmpty()) : emit(TvTopRatedHasData(success));
+    }, (success) {
+      success.isEmpty
+          ? emit(TvTopRatedEmpty())
+          : emit(TvTopRatedHasData(success));
     });
   }
 }

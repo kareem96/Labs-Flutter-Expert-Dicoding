@@ -15,6 +15,7 @@ import 'package:core/domain/usecase/tv/get_watchlist_status_tv.dart';
 import 'package:core/domain/usecase/tv/get_watchlist_tv.dart';
 import 'package:core/domain/usecase/tv/remove_watchlist_tv.dart';
 import 'package:core/domain/usecase/tv/save_watchlist_tv.dart';
+import 'package:core/utils/ssl_pinning/http_ssl_pinning.dart';
 import 'package:movie/presentation/bloc/detail/movie_detail_bloc.dart';
 import 'package:movie/presentation/bloc/movie_recommendation/movie_recommendation_bloc.dart';
 import 'package:movie/presentation/bloc/movie_watchlist/movie_watchlist_bloc.dart';
@@ -149,4 +150,7 @@ void init() {
   ///external
   locator.registerLazySingleton(() => http.Client());
   locator.registerLazySingleton(() => DataConnectionChecker());
+
+  locator.registerLazySingleton(() => HttpSSLPinning.client);
+
 }
